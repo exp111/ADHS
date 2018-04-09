@@ -1,9 +1,10 @@
-#ifndef _LIST_H
+ï»¿#ifndef _LIST_H
 #define _LIST_H
 #include "Node.h"
 #include <string>
 #include <iostream>
 
+template <class T>
 class List 
 {
 /* 
@@ -12,88 +13,100 @@ class List
 */
 private:
 	struct form { std::string start = "<< "; std::string zwischen = ", "; std::string ende = " >>\n"; } _form;
-	Node * head, * tail;			// Zeiger auf Kopf- und End-Element
-	int _size;						// Länge der Kette
-	bool temp;						// normalerweise false; ist true, wenn es sich um eine temoräre Liste handelt
-									// die innerhalb der überladenen Operatoren angelegt wird
+	Node<T> * head, * tail;			// Zeiger auf Kopf- und End-Element
+	int _size;						// LÃ¤nge der Kette
+	bool temp;						// normalerweise false; ist true, wenn es sich um eine temorÃ¤re Liste handelt
+									// die innerhalb der Ã¼berladenen Operatoren angelegt wird
 public:
 	List();
 	~List();
-	void InsertFront(int key);		// Einfügen eines Knotens am Anfang
-	void InsertBack(int key);		// Einfügen eines Knotesn am Ende
-	bool getFront(int & key);		// Entnehmen eines Knoten am Anfang
-	bool getBack(int & key);		// Entnehmen eines Knoten am Ende
-	Node* searchFirst(int key);
-	bool del(int key);				// löschen eines Knotens [key]
-	bool search(int key);			// Suchen eines Knoten
-	bool swap(int key1, int key2);	// Knoten in der Liste vertauschen
-	int size(void);					// Größe der Lise (Anzahl der Knoten)
-	bool test(void);				// Überprüfen der Zeigerstruktur der Liste
+	void InsertFront(T key);		// EinfÃ¼gen eines Knotens am Anfang
+	void InsertBack(T key);		// EinfÃ¼gen eines Knotesn am Ende
+	bool getFront(T & key);		// Entnehmen eines Knoten am Anfang
+	bool getBack(T & key);		// Entnehmen eines Knoten am Ende
+	Node<T>* searchFirst(T key);
+	bool del(T key);				// lÃ¶schen eines Knotens [key]
+	bool search(T key);			// Suchen eines Knoten
+	bool swap(T key1, T key2);	// Knoten in der Liste vertauschen
+	int size(void);					// GrÃ¶ÃŸe der Lise (Anzahl der Knoten)
+	bool test(void);				// ÃœberprÃ¼fen der Zeigerstruktur der Liste
+
 	void format(const std::string & start, const std::string & zwischen, const std::string & ende);	// Mit der format-Methode kann die Ausgabe gesteuert werden: operator <<
-	List & operator = (const List & _List);						// Zuweisungsoperator definieren
-	List & operator = (const List * _List);						// Zuweisungsoperator definieren
-	List & operator + (const List & List_Append);				// Listen zusammenführen zu einer Liste
-	List & operator + (const List * List_Append);				// Listen zusammenführen zu einer Liste
-	friend std::ostream & operator << (std::ostream & stream, List const & Liste);		// Ausgabeoperator überladen
-	friend std::ostream & operator << (std::ostream & stream, List const * Liste);		// Ausgabeoperator überladen
+	List<T> & operator = (const List<T> & _List);						// Zuweisungsoperator definieren
+	List<T> & operator = (const List<T> * _List);						// Zuweisungsoperator definieren
+	List<T> & operator + (const List<T> & List_Append);					// Listen zusammenfÃ¼hren zu einer Liste
+	List<T> & operator + (const List<T> * List_Append);					// Listen zusammenfÃ¼hren zu einer Liste
+	template <typename Tf>
+	friend std::ostream & operator << (std::ostream & stream, const List<Tf> & Liste);		// Ausgabeoperator Ã¼berladen
+	template <typename Tf>
+	friend std::ostream & operator << (std::ostream & stream, const List<Tf> * Liste);		// Ausgabeoperator Ã¼berladen
 };
 
+template <class T>
 List::List()
 {
-	head = new Node;
-	tail = new Node;
+	head = new Node<T>;
+	tail = new Node<T>;
 	_size = 0;
 	temp = false;
 	head->next = tail;
 	tail->prev = head;
 }
+
+template <class T>
 List::~List()
 {
-	//( ... löschen Sie alle noch vorhandenen Knoten Node dieser Instanz 
+	//( ... lÃ¶schen Sie alle noch vorhandenen Knoten Node dieser Instanz 
 	// Denken Sie auch den die Knoten head und tail.)
 	while (head != nullptr)
 	{
-		Node* next = head->next;
+		Node<T>* next = head->next;
 		delete head;
 		head = next;
 	}
 }
-void List::InsertFront(int key)
+
+template <class T>
+void List<T>::InsertFront(T key)
 {
 	//( ... Erweitern Sie die Methode so, dass ein neuer Knoten Node vorne
-	//	(hinter dem Knoten head) in die Liste eingefügt wird. )
+	//	(hinter dem Knoten head) in die Liste eingefÃ¼gt wird. )
 
-	Node* oldNext = head->next;
-	Node* newNode = new Node(key, oldNext, head);
+	Node<T>* oldNext = head->next;
+	Node<T>* newNode = new Node<T>(key, oldNext, head);
 
 	head->next = newNode;
 	oldNext->prev = newNode;
 }
-void List::InsertBack(int key)
+
+template <class T>
+void List<T>::InsertBack(T key)
 {
 	//( ... Erweitern Sie die Methode so, dass ein neuer Knoten Node hinten
-	//	(vor dem Knoten tail) in die Liste eingefügt wird. )
+	//	(vor dem Knoten tail) in die Liste eingefÃ¼gt wird. )
 
-	Node* oldPrev = tail->prev;
-	Node* newNode = new Node(key, tail, oldPrev);
+	Node<T>* oldPrev = tail->prev;
+	Node<T>* newNode = new Node<T>(key, tail, oldPrev);
 
 	oldPrev->next = newNode;
 	tail->prev = newNode;
 }
-bool List::getFront(int & key)
+
+template <class T>
+bool List<T>::getFront(T & key)
 {
 	//( ... Erweitern Sie die Methode so, dass der erste Knoten der Liste
-	//	(hinter head) zurückgegeben und dieser Knoten dann gelöscht wird.
-	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+	//	(hinter head) zurÃ¼ckgegeben und dieser Knoten dann gelÃ¶scht wird.
+	//	Im Erfolgsfall geben Sie true zurÃ¼ck, sonst false. )
 
-	Node* knoten = head->next;
+	Node<T>* knoten = head->next;
 	if (knoten == nullptr || knoten == tail)
 		return false;
 	else
 	{
 		key = knoten->key; //Get Key
 						   //Delete
-		Node* oldNext = knoten->next;
+		Node<T>* oldNext = knoten->next;
 		delete knoten;
 		head->next = oldNext;
 		oldNext->prev = head;
@@ -101,19 +114,21 @@ bool List::getFront(int & key)
 		return true;
 	}
 }
-bool List::getBack(int & key)
+
+template <class T>
+bool List<T>::getBack(T & key)
 {
 	//(... Erweitern Sie die Methode so, dass der letzte Knoten der Liste
-	//	(vor tail) zurückgegeben und dieser Knoten dann gelöscht wird.
-	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
-	Node* knoten = tail->prev;
+	//	(vor tail) zurÃ¼ckgegeben und dieser Knoten dann gelÃ¶scht wird.
+	//	Im Erfolgsfall geben Sie true zurÃ¼ck, sonst false. )
+	Node<T>* knoten = tail->prev;
 	if (knoten == nullptr || knoten == head)
 		return false;
 	else
 	{
 		key = knoten->key; //Get Key
 						   //Delete
-		Node* oldPrev = knoten->prev;
+		Node<T>* oldPrev = knoten->prev;
 		delete knoten;
 		oldPrev->next = tail;
 		tail->prev = oldPrev;
@@ -121,9 +136,11 @@ bool List::getBack(int & key)
 		return true;
 	}
 }
-Node* List::searchFirst(int key)
+
+template <class T>
+Node<T>* List<T>::searchFirst(T key)
 {
-	Node* knoten = head->next;
+	Node<T>* knoten = head->next;
 	while (knoten != nullptr && knoten != tail)
 	{
 		if (knoten->key == key)
@@ -132,18 +149,20 @@ Node* List::searchFirst(int key)
 	}
 	return nullptr;
 }
-bool List::del(int key)
+
+template <class T>
+bool List<T>::del(T key)
 {
-	//(... Die Methode del sucht den Knoten mit dem Wert Key und löscht diesen
+	//(... Die Methode del sucht den Knoten mit dem Wert Key und lÃ¶scht diesen
 	//	im Erfolgsfall aus der Liste.
-	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
-	Node* knoten = searchFirst(key);
+	//	Im Erfolgsfall geben Sie true zurÃ¼ck, sonst false. )
+	Node<T>* knoten = searchFirst(key);
 	if (knoten == nullptr) //Check for find
 		return false;
 
 	//Backup near
-	Node* oldPrev = knoten->prev;
-	Node* oldNext = knoten->next;
+	Node<T>* oldPrev = knoten->prev;
+	Node<T>* oldNext = knoten->next;
 	delete knoten; //Delete
 				   //Connect near Nodes
 	oldPrev->next = oldNext;
@@ -151,20 +170,24 @@ bool List::del(int key)
 
 	return true;
 }
-bool List::search(int key)
+
+template <class T>
+bool List<T>::search(T key)
 {
 	//(... Die Methode search sucht den Knoten mit dem Wert key
-	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+	//	Im Erfolgsfall geben Sie true zurÃ¼ck, sonst false. )
 	return searchFirst(key) != nullptr;
 }
-bool List::swap(int key1, int key2)
+
+template <class T>
+bool List<T>::swap(T key1, T key2)
 {
 	//(... Die Methode swap sucht den Knoten mit dem Wert key1,
 	//	dann den Knoten mit dem Wert key2. Diese Knoten werden dann
-	//	getauscht, indem die Zeiger der Knoten entsprechend geändert
+	//	getauscht, indem die Zeiger der Knoten entsprechend geÃ¤ndert
 	//	werden. )
-	Node* firstKnoten = searchFirst(key1);
-	Node* secondKnoten = searchFirst(key2);
+	Node<T>* firstKnoten = searchFirst(key1);
+	Node<T>* secondKnoten = searchFirst(key2);
 	if (firstKnoten == nullptr || secondKnoten == nullptr)
 		return false;
 
@@ -172,11 +195,13 @@ bool List::swap(int key1, int key2)
 	secondKnoten->key = key1;
 	return true;
 }
-int List::size(void)
+
+template <class T>
+int List<T>::size(void)
 {
-	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurück. )
+	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurÃ¼ck. )
 	int size = 0;
-	Node* knoten = head;
+	Node<T>* knoten = head;
 	while (knoten->next != nullptr && knoten->next != tail)
 	{
 		size++;
@@ -184,14 +209,16 @@ int List::size(void)
 	}
 	return size;
 }
-bool List::test(void)
+
+template <class T>
+bool List<T>::test(void)
 {
-	//(... Die Methode überprüft die Pointer der Liste. Gestartet wird mit head. Es werden alle 
+	//(... Die Methode Ã¼berprÃ¼ft die Pointer der Liste. Gestartet wird mit head. Es werden alle 
 	//	Knoten bis zum tail durchlaufen von dort aus dann die prev-Zeiger bis zum head.
-	//	Bei Erfolg wird true zurück gegeben. )
+	//	Bei Erfolg wird true zurÃ¼ck gegeben. )
 
 	//Start at head
-	Node* knoten = head;
+	Node<T>* knoten = head;
 	while (knoten->next != nullptr) //Go till we have no more
 	{
 		knoten = knoten->next;
@@ -207,24 +234,26 @@ bool List::test(void)
 	return knoten == head; //Are we at head again? -> return true
 }
 
-void List::format(const std::string & start, const std::string & zwischen, const std::string & ende)
+template <class T>
+void List<T>::format(const std::string & start, const std::string & zwischen, const std::string & ende)
 {
 	_form.start = start;
 	_form.zwischen = zwischen;
 	_form.ende = ende;
 }
 
-List & List::operator = (const List & _List)
+template <class T>
+List<T> & List<T>::operator = (const List<T> & _List)
 {
 	// in dem Objekt _List sind die Knoten enthalten, die Kopiert werden sollen.
 	// Kopiert wird in das Objekt "this"
 	if (this == &_List) return *this;	//  !! keine Aktion notwendig
-	Node * tmp_node;
+	Node<T> * tmp_node;
 	if (_size)
 	{
-		Node * tmp_del;
+		Node<T> * tmp_del;
 		tmp_node = head->next;
-		while (tmp_node != tail)		// Alle eventuell vorhandenen Knoten in this löschen
+		while (tmp_node != tail)		// Alle eventuell vorhandenen Knoten in this lï¿½schen
 		{
 			tmp_del = tmp_node;
 			tmp_node = tmp_node->next;
@@ -240,21 +269,22 @@ List & List::operator = (const List & _List)
 		InsertBack(tmp_node->key);
 		tmp_node = tmp_node->next;
 	}
-	if (_List.temp) delete & _List;		// ist die Übergebene Liste eine temporäre Liste? -> aus Operator +
+	if (_List.temp) delete & _List;		// ist die ï¿½bergebene Liste eine temporï¿½re Liste? -> aus Operator +
 	return *this;
 }
 
-List & List::operator = (const List * _List)
+template <class T>
+List<T> & List<T>::operator = (const List<T> * _List)
 {
 	// in dem Objekt _List sind die Knoten enthalten, die Kopiert werden sollen.
 	// Kopiert wird in das Objekt "this"
 	if (this == _List) return *this;	//  !! keine Aktion notwendig
-	Node * tmp_node;
+	Node<T> * tmp_node;
 	if (_size)
 	{
-		Node * tmp_del;
+		Node<T> * tmp_del;
 		tmp_node = head->next;
-		while (tmp_node != tail)		// Alle eventuell vorhandenen Knoten in this löschen
+		while (tmp_node != tail)		// Alle eventuell vorhandenen Knoten in this lï¿½schen
 		{
 			tmp_del = tmp_node;
 			tmp_node = tmp_node->next;
@@ -270,79 +300,84 @@ List & List::operator = (const List * _List)
 		InsertBack(tmp_node->key);
 		tmp_node = tmp_node->next;
 	}
-	if (_List->temp) delete _List;		// ist die Übergebene Liste eine temporäre Liste? -> aus Operator +
+	if (_List->temp) delete _List;		// ist die ï¿½bergebene Liste eine temporï¿½re Liste? -> aus Operator +
 	return *this;
 }
 
-List & List::operator + (const List & List_Append)
+template <class T>
+List<T> & List<T>::operator + (List<T> const & List_Append)
 {
-	Node * tmp_node;
+	Node<T> * tmp_node;
 	List * tmp;
-	if (temp) {								// this ist eine temporäre Liste und kann verändert werden
+	if (temp) {								// this ist eine temporï¿½re Liste und kann verï¿½ndert werden
 		tmp = this;
 	}
 	else {
-		tmp = new List;						// this ist keine temporäre Liste -> Kopie erzeugen
-		tmp->temp = true;					// Merker setzten, dass es sich um eine temporäre Liste handelt
+		tmp = new List<T>;					// this ist keine temporï¿½re Liste -> Kopie erzeugen
+		tmp->temp = true;					// Merker setzten, dass es sich um eine temporï¿½re Liste handelt
 		tmp_node = head->next;
 		while (tmp_node != tail) {
 			tmp->InsertBack(tmp_node->key);
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append._size) {				// anhängen der übergebenen Liste an tmp
+	if (List_Append._size) {				// anhï¿½ngen der ï¿½bergebenen Liste an tmp
 		tmp_node = List_Append.head->next;
 		while (tmp_node != List_Append.tail) {
 			tmp->InsertBack(tmp_node->key);
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append.temp) delete & List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht							// 
+	if (List_Append.temp) delete & List_Append;		// wurde eine temporï¿½re Liste ï¿½bergeben, dann wird diese gelï¿½scht							// 
 	return *tmp;
 }
 
-List & List::operator + (const List * List_Append)
+template <class T>
+List<T> & List<T>::operator + (List<T> const * List_Append)
 {
-	Node * tmp_node;
+	Node<T> * tmp_node;
 	List * tmp;
-	if (temp) {								// this ist eine temporäre Liste und kann verändert werden
+	if (temp) {								// this ist eine temporÃ¤re Liste und kann verÃ¤ndert werden
 		tmp = this;
 	}
 	else {
-		tmp = new List;						// this ist keine temporäre Liste -> Kopie erzeugen
-		tmp->temp = true;					// Merker setzten, dass es sich um eine temporäre Liste handelt
+		tmp = new List<T>;					// this ist keine temporÃ¤re Liste -> Kopie erzeugen
+		tmp->temp = true;					// Merker setzten, dass es sich um eine temporÃ¤re Liste handelt
 		tmp_node = head->next;
 		while (tmp_node != tail) {
 			tmp->InsertBack(tmp_node->key);
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append->_size) {				// anhängen der übergebenen Liste an tmp
+	if (List_Append->_size) {				// anhÃ¤ngen der Ã¼bergebenen Liste an tmp
 		tmp_node = List_Append->head->next;
 		while (tmp_node != List_Append->tail) {
 			tmp->InsertBack(tmp_node->key);
 			tmp_node = tmp_node->next;
 		}
 	}
-	if (List_Append->temp) delete List_Append;		// wurde eine temporäre Liste übergeben, dann wird diese gelöscht							// 
+	if (List_Append->temp) delete List_Append;		// wurde eine temporÃ¤re Liste Ã¼bergeben, dann wird diese gelÃ¶scht							// 
 	return *tmp;
 }
 
-std::ostream & operator<<(std::ostream  & stream, List const & Liste)
+
+template <class Tf>
+std::ostream & operator << (std::ostream  & stream, const List<Tf> & Liste)
 {
 	stream << Liste._form.start;
-	for (Node * tmp = Liste.head->next; tmp != Liste.tail; tmp = tmp->next)
+	for (Node<Tf> * tmp = Liste.head->next; tmp != Liste.tail; tmp = tmp->next)
 		stream << tmp->key << (tmp->next == Liste.tail ? Liste._form.ende : Liste._form.zwischen);
-	if (Liste.temp) delete & Liste;			// wurde eine temporäre Liste übergeben, dann wird diese gelöscht
+	if (Liste.temp) delete & Liste;			// wurde eine temporÃ¤re Liste Ã¼bergeben, dann wird diese gelÃ¶scht
 	return stream;
 }
 
-std::ostream & operator << (std::ostream & stream, List const * Liste)
+template <class Tf>
+std::ostream & operator << (std::ostream  & stream, const List<Tf> * Liste)
 {
 	stream << Liste->_form.start;
-	for (Node * tmp = Liste->head->next; tmp != Liste->tail; tmp = tmp->next)
+	for (Node<Tf> * tmp = Liste->head->next; tmp != Liste->tail; tmp = tmp->next)
 		stream << tmp->key << (tmp->next == Liste->tail ? Liste->_form.ende : Liste->_form.zwischen);
-	if (Liste->temp) delete Liste;			// wurde eine temporäre Liste übergeben, dann wird diese gelöscht
+	if (Liste->temp) delete Liste;			// wurde eine temporÃ¤re Liste Ã¼bergeben, dann wird diese gelÃ¶scht
 	return stream;
 }
 
