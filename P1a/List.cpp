@@ -1,4 +1,5 @@
 #include "List.h"
+
 List::List()
 {
 	head = new Node;
@@ -23,29 +24,64 @@ void List::InsertFront(int key)
 {
 	//( ... Erweitern Sie die Methode so, dass ein neuer Knoten Node vorne
 	//	(hinter dem Knoten head) in die Liste eingefügt wird. )
-	Node* newNode = new Node(key);
+	
 	Node* oldNext = head->next;
+	Node* newNode = new Node(key, oldNext, head);
+
 	head->next = newNode;
-	newNode->prev = head;
-	newNode->next = oldNext;
 	oldNext->prev = newNode;
 }
 void List::InsertBack(int key)
 {
-	//TODO: ( ... Erweitern Sie die Methode so, dass ein neuer Knoten Node hinten
+	//( ... Erweitern Sie die Methode so, dass ein neuer Knoten Node hinten
 	//	(vor dem Knoten tail) in die Liste eingefügt wird. )
+	
+	Node* oldPrev = tail->prev;
+	Node* newNode = new Node(key, tail, oldPrev);
+
+	oldPrev->next = newNode;
+	tail->prev = newNode;
 }
 bool List::getFront(int & key)
 {
-	//TODO: ( ... Erweitern Sie die Methode so, dass der erste Knoten der Liste
+	//( ... Erweitern Sie die Methode so, dass der erste Knoten der Liste
 	//	(hinter head) zurückgegeben und dieser Knoten dann gelöscht wird.
 	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+
+	Node* knoten = head->next;
+	if (knoten == nullptr || knoten == tail)
+		return false;
+	else
+	{
+		key = knoten->key; //Get Key
+		//Delete
+		Node* oldNext = knoten->next;
+		delete knoten;
+		head->next = oldNext;
+		oldNext->prev = head;
+
+		return true;
+	}
 }
 bool List::getBack(int & key)
 {
-	//TODO: (... Erweitern Sie die Methode so, dass der letzte Knoten der Liste
+	//(... Erweitern Sie die Methode so, dass der letzte Knoten der Liste
 	//	(vor tail) zurückgegeben und dieser Knoten dann gelöscht wird.
 	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+	Node* knoten = tail->prev;
+	if (knoten == nullptr || knoten == head)
+		return false;
+	else
+	{
+		key = knoten->key; //Get Key
+		//Delete
+		Node* oldPrev = knoten->prev;
+		delete knoten;
+		oldPrev->next = tail;
+		tail->prev = oldPrev;
+
+		return true;
+	}
 }
 bool List::del(int key)
 {
