@@ -58,5 +58,6 @@ int main(void)
 	else
 		cout << "MyList3: Zeiger ******Error\n";
 
+	system("PAUSE");
 	return 0;
 }

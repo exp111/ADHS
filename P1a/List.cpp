@@ -83,27 +83,60 @@ bool List::getBack(int & key)
 		return true;
 	}
 }
+Node* List::searchFirst(int key)
+{
+	Node* knoten = head->next;
+	while (knoten != nullptr && knoten != tail)
+	{
+		if (knoten->key == key)
+			return knoten;
+		knoten = knoten->next;
+	}
+	return nullptr;
+}
 bool List::del(int key)
 {
-	//TODO: (... Die Methode del sucht den Knoten mit dem Wert Key und löscht diesen
+	//(... Die Methode del sucht den Knoten mit dem Wert Key und löscht diesen
 	//	im Erfolgsfall aus der Liste.
 	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+	Node* knoten = searchFirst(key);
+	if (knoten == nullptr) //Check for find
+		return false;
+
+	//Backup near
+	Node* oldPrev = knoten->prev;
+	Node* oldNext = knoten->next;
+	delete knoten; //Delete
+	//Connect near Nodes
+	oldPrev->next = oldNext;
+	oldNext->prev = oldPrev;
+
+	return true;
 }
 bool List::search(int key)
 {
-	//TODO: (... Die Methode search sucht den Knoten mit dem Wert key
+	//(... Die Methode search sucht den Knoten mit dem Wert key
 	//	Im Erfolgsfall geben Sie true zurück, sonst false. )
+	return searchFirst(key) != nullptr;
 }
 bool List::swap(int key1, int key2)
 {
-	//TODO: (... Die Methode swap sucht den Knoten mit dem Wert key1,
+	//(... Die Methode swap sucht den Knoten mit dem Wert key1,
 	//	dann den Knoten mit dem Wert key2. Diese Knoten werden dann
 	//	getauscht, indem die Zeiger der Knoten entsprechend geändert
 	//	werden. )
+	Node* firstKnoten = searchFirst(key1);
+	Node* secondKnoten = searchFirst(key2);
+	if (firstKnoten == nullptr || secondKnoten == nullptr)
+		return false;
+
+	firstKnoten->key = key2;
+	secondKnoten->key = key1;
+	return true;
 }
 int List::size(void)
 {
-	// (... Die Methode git den Wert von size (Anzahl der Knoten in der Liste) zurück. )
+	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurück. )
 	int size = 0;
 	Node* knoten = head;
 	while (knoten->next != nullptr && knoten->next != tail)

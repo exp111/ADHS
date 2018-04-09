@@ -23,6 +23,7 @@ public:
 	void InsertBack(int key);		// Einfügen eines Knotesn am Ende
 	bool getFront(int & key);		// Entnehmen eines Knoten am Anfang
 	bool getBack(int & key);		// Entnehmen eines Knoten am Ende
+	Node* searchFirst(int key);
 	bool del(int key);				// löschen eines Knotens [key]
 	bool search(int key);			// Suchen eines Knoten
 	bool swap(int key1, int key2);	// Knoten in der Liste vertauschen
