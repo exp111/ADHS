@@ -103,13 +103,37 @@ bool List::swap(int key1, int key2)
 }
 int List::size(void)
 {
-	//TODO: (... Die Methode git den Wert von size (Anzahl der Knoten in der Liste) zurück. )
+	// (... Die Methode git den Wert von size (Anzahl der Knoten in der Liste) zurück. )
+	int size = 0;
+	Node* knoten = head;
+	while (knoten->next != nullptr && knoten->next != tail)
+	{
+		size++;
+		knoten = knoten->next;
+	}
+	return size;
 }
 bool List::test(void)
 {
-	//TODO: (... Die Methode überprüft die Pointer der Liste. Gestartet wird mit head. Es werden alle 
+	//(... Die Methode überprüft die Pointer der Liste. Gestartet wird mit head. Es werden alle 
 	//	Knoten bis zum tail durchlaufen von dort aus dann die prev-Zeiger bis zum head.
 	//	Bei Erfolg wird true zurück gegeben. )
+
+	//Start at head
+	Node* knoten = head;
+	while (knoten->next != nullptr) //Go till we have no more
+	{
+		knoten = knoten->next;
+	}
+	if (knoten != tail) //If we're not at tail frick off
+		return false;
+	//Start at tail
+	knoten = tail;
+	while (knoten->prev != nullptr) //Go till we have no more
+	{
+		knoten = knoten->prev;
+	}
+	return knoten == head; //Are we at head again? -> return true
 }
 
 void List::format(const std::string & start, const std::string & zwischen, const std::string & ende)
