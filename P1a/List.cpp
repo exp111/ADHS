@@ -30,6 +30,8 @@ void List::InsertFront(int key)
 
 	head->next = newNode;
 	oldNext->prev = newNode;
+
+	_size++;
 }
 void List::InsertBack(int key)
 {
@@ -41,6 +43,8 @@ void List::InsertBack(int key)
 
 	oldPrev->next = newNode;
 	tail->prev = newNode;
+
+	_size++;
 }
 bool List::getFront(int & key)
 {
@@ -59,6 +63,8 @@ bool List::getFront(int & key)
 		delete knoten;
 		head->next = oldNext;
 		oldNext->prev = head;
+
+		_size--;
 
 		return true;
 	}
@@ -79,6 +85,8 @@ bool List::getBack(int & key)
 		delete knoten;
 		oldPrev->next = tail;
 		tail->prev = oldPrev;
+
+		_size--;
 
 		return true;
 	}
@@ -107,6 +115,7 @@ bool List::del(int key)
 	Node* oldPrev = knoten->prev;
 	Node* oldNext = knoten->next;
 	delete knoten; //Delete
+	_size--;
 	//Connect near Nodes
 	oldPrev->next = oldNext;
 	oldNext->prev = oldPrev;
@@ -137,14 +146,7 @@ bool List::swap(int key1, int key2)
 int List::size(void)
 {
 	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurück. )
-	int size = 0;
-	Node* knoten = head;
-	while (knoten->next != nullptr && knoten->next != tail)
-	{
-		size++;
-		knoten = knoten->next;
-	}
-	return size;
+	return _size;
 }
 bool List::test(void)
 {

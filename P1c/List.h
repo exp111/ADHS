@@ -5,15 +5,15 @@
 #include <iostream>
 
 template <class T>
-class List 
+class List
 {
-/* 
+	/*
 	Die Klasse List dient zur Verwaltung von Knoten (Node). Mit Hilfe der Klasse List
 	kann ein Stapel oder Warteschlange realisiert werden.
-*/
+	*/
 private:
 	struct form { std::string start = "<< "; std::string zwischen = ", "; std::string ende = " >>\n"; } _form;
-	Node<T> * head, * tail;			// Zeiger auf Kopf- und End-Element
+	Node<T> * head, *tail;			// Zeiger auf Kopf- und End-Element
 	int _size;						// Länge der Kette
 	bool temp;						// normalerweise false; ist true, wenn es sich um eine temoräre Liste handelt
 									// die innerhalb der überladenen Operatoren angelegt wird
@@ -77,6 +77,8 @@ void List<T>::InsertFront(T key)
 
 	head->next = newNode;
 	oldNext->prev = newNode;
+
+	_size++;
 }
 
 template <class T>
@@ -90,6 +92,8 @@ void List<T>::InsertBack(T key)
 
 	oldPrev->next = newNode;
 	tail->prev = newNode;
+
+	_size++;
 }
 
 template <class T>
@@ -110,6 +114,7 @@ bool List<T>::getFront(T & key)
 		delete knoten;
 		head->next = oldNext;
 		oldNext->prev = head;
+		_size--;
 
 		return true;
 	}
@@ -132,6 +137,8 @@ bool List<T>::getBack(T & key)
 		delete knoten;
 		oldPrev->next = tail;
 		tail->prev = oldPrev;
+
+		_size--;
 
 		return true;
 	}
@@ -163,8 +170,10 @@ bool List<T>::del(T key)
 	//Backup near
 	Node<T>* oldPrev = knoten->prev;
 	Node<T>* oldNext = knoten->next;
-	delete knoten; //Delete
-				   //Connect near Nodes
+	//Delete
+	delete knoten;
+	_size--;
+	//Connect near Nodes
 	oldPrev->next = oldNext;
 	oldNext->prev = oldPrev;
 
@@ -200,14 +209,7 @@ template <class T>
 int List<T>::size(void)
 {
 	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurück. )
-	int size = 0;
-	Node<T>* knoten = head;
-	while (knoten->next != nullptr && knoten->next != tail)
-	{
-		size++;
-		knoten = knoten->next;
-	}
-	return size;
+	return _size;
 }
 
 template <class T>

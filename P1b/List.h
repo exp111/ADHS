@@ -77,6 +77,8 @@ void List<T>::InsertFront(T key)
 
 	head->next = newNode;
 	oldNext->prev = newNode;
+
+	_size++;
 }
 
 template <class T>
@@ -90,6 +92,8 @@ void List<T>::InsertBack(T key)
 
 	oldPrev->next = newNode;
 	tail->prev = newNode;
+
+	_size++;
 }
 
 template <class T>
@@ -110,6 +114,7 @@ bool List<T>::getFront(T & key)
 		delete knoten;
 		head->next = oldNext;
 		oldNext->prev = head;
+		_size--;
 
 		return true;
 	}
@@ -132,6 +137,8 @@ bool List<T>::getBack(T & key)
 		delete knoten;
 		oldPrev->next = tail;
 		tail->prev = oldPrev;
+
+		_size--;
 
 		return true;
 	}
@@ -163,8 +170,10 @@ bool List<T>::del(T key)
 	//Backup near
 	Node<T>* oldPrev = knoten->prev;
 	Node<T>* oldNext = knoten->next;
-	delete knoten; //Delete
-				   //Connect near Nodes
+	//Delete
+	delete knoten;
+	_size--;
+	//Connect near Nodes
 	oldPrev->next = oldNext;
 	oldNext->prev = oldPrev;
 
@@ -200,14 +209,7 @@ template <class T>
 int List<T>::size(void)
 {
 	// (... Die Methode gibt den Wert von size (Anzahl der Knoten in der Liste) zurück. )
-	int size = 0;
-	Node<T>* knoten = head;
-	while (knoten->next != nullptr && knoten->next != tail)
-	{
-		size++;
-		knoten = knoten->next;
-	}
-	return size;
+	return _size;
 }
 
 template <class T>

@@ -5,7 +5,7 @@ using namespace std;
 int main(void)
 {
 	int i;
-	List MyList;
+	List<int> MyList;
 
 	for (i = 0; i < 10; i++){
 		MyList.InsertFront(i + 1);
@@ -21,8 +21,8 @@ int main(void)
 		cout << i << " ";
 	cout << endl << endl;
 
-	List MyList1, MyList2, MyList3;
-	List * MyList_dyn = new List;
+	List<int> MyList1, MyList2, MyList3;
+	List<int>* MyList_dyn = new List<int>;
 
 	for (i = 0; i < 10; i++){
 		MyList1.InsertFront(i + 1);
