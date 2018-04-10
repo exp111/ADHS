@@ -36,6 +36,13 @@ using namespace std;
 30 --------------------------
 */
 
+/*
+Fragen:
+1. Flugschreiber, Prozesse in denen nur die neusten Daten gespeichert werden müssen; Queues
+2. Ja
+3. 10 Jahre
+4. Längeres Array, automatisiertes Speichern (keine manuelle Eingabe), mehrere Backups/Ringpuffer pro Jahr
+*/
 int main()
 {
 	Ringpuffer* ring = new Ringpuffer;
