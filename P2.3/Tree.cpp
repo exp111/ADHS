@@ -5,26 +5,26 @@ Tree::Tree()
 
 Tree::~Tree()
 {
-	//TODO:
+	//TODO: deconstructor
 }
 
 void Tree::add(TreeNode * node)
 {
-	//TODO:
+	//TODO: add()
 }
 
 void Tree::remove(int posID)
 {
-	//TODO:
+	//TODO: remove()
 }
 
 void Tree::print()
 {
-	//TODO:
+	//TODO: print()
 }
 
 TreeNode * Tree::search(string Name)
 {
-	//TODO:
+	//TODO: search()
 	return nullptr;
 }
