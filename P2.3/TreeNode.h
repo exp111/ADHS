@@ -4,6 +4,7 @@
 
 class TreeNode
 {
+	friend class Tree;
 private:
 	int NodePosID;
 	int NodeID;
@@ -11,7 +12,6 @@ private:
 	int Alter;
 	double Einkommen;
 	int PLZ;
-	//TODO: make public or tree buddy
 	TreeNode* links = nullptr;
 	TreeNode* rechts = nullptr;
 public:

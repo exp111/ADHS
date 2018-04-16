@@ -5,11 +5,11 @@ using namespace std;
 
 class RingNode
 {
+	friend class Ringpuffer;
 private:
 	int OldAge = 0;
 	string Description;
 	string SymbolicData;
-public:
 	RingNode* next;
 
 public:
