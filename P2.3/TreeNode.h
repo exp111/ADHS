@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+using namespace std;
 
 class TreeNode
 {
@@ -16,6 +17,7 @@ private:
 	TreeNode* rechts = nullptr;
 public:
 	TreeNode();
+	TreeNode(string Name, int Alter, double Einkommen, int PLZ);
 	~TreeNode();
 
 	string getName();
@@ -27,5 +29,7 @@ public:
 	void setEinkommen(double einkommen);
 	void setPLZ(int plz);
 	void printData();
+
+	void setID(int ID);
 };
 

@@ -58,13 +58,13 @@ Name ?> Schmitt
 */
 int main()
 {
-	Tree* ring = new Tree;
+	Tree* tree = new Tree;
 	cout << "==================================" << endl
 		<< "Person Analyzer v19.84, by George Orwell" << endl
 		<< "==================================" << endl
 		<< "1) Datensatz einfuegen, manuell" << endl
 		<< "2) Datensatz einfuegen, CSV Datei" << endl
-		<< "3) Datensatz loschen" << endl
+		<< "3) Datensatz loeschen" << endl
 		<< "4) Suchen" << endl
 		<< "5) Datenstruktur anzeigen" << endl;
 
@@ -75,52 +75,98 @@ int main()
 		getline(cin, input);
 		if (input == "1") //Add manual
 		{
-			//TODO: add manual
+			/* 11 ?> 1 // Beispiel: manuelles Hinzufugen eines Datensatzes
+			12 + Bitte geben Sie die den Datensatz ein
+			13 Name ?> Mustermann
+			14 Alter ?> 1
+			15 Einkommen ?> 1000.00
+			16 PLZ ?> 1
+			17 + Ihr Datensatz wurde eingefugt */
 			//What data
-			cout << "+Neuen Datensatz einfuegen" << endl << "Beschreibung ?> ";
-			string desc;
-			getline(cin, desc);
-			cout << "Daten >? ";
-			string data;
-			getline(cin, data);
-			RingNode* node = new RingNode();
-			node->setDescription(desc);
-			node->setData(data);
-			ring->addNode(node);
-			cout << "Ihr Datensatz wurde hinzugefuegt." << endl;
+			cout << "+Bitte geben Sie die den Datensatz ein" << endl << "Name ?> ";
+			string name;
+			getline(cin, name);
+
+			cout << "Alter >? ";
+			string alter;
+			getline(cin, alter);
+
+			cout << "Einkommen >? ";
+			string einkommen;
+			getline(cin, einkommen);
+
+			cout << "PLZ >? ";
+			string plz;
+			getline(cin, plz);
+
+			TreeNode* node = new TreeNode(name, stoi(alter), stod(einkommen), stoi(plz));
+			tree->add(node);
+			cout << "Ihr Datensatz wurde eingefuegt." << endl;
 		}
 		else if (input == "2") //Add .csv
 		{
 			//TODO: Add csv
+			/* ?> 2 // Beispiel: CSV Import
+			50 + Mochten Sie die Daten aus der Datei "ExportZielanalyse.csv" importieren (j/n) ?> j
+			51 + Daten wurden dem Baum hinzugefugt. */
 			//What data
-			cout << "+Nach welchen Daten soll gesucht werden?" << endl << "?> ";
-			string data;
-			getline(cin, data);
-			/*RingNode* node = ring->search(data);
-			if (node != nullptr)
-			{
-				cout << "+ Gefunden in Backup: ";
-				node->print();
-			}
-			else
-				cout << "+ Nicht gefunden.";
+			cout << "+ Moechten Sie die Daten aus der Datei \"ExportZielanalyse.csv\" importieren (j/n)?" << endl << "?> ";
+			string yee;
+			getline(cin, yee);
 
-			cout << endl;*/
+			if (yee == "j")
+			{
+				if (tree->importCSV("ExportZielanalyse.csv"))
+					cout << "Daten wurden dem Baum hinzugefuegt." << endl;
+				else
+					cout << "Daten konnten nicht importiert werden." << endl;
+			}
 		}
 		else if (input == "3") //Delete Data
 		{
-			//TODO: Delete
-			ring->print();
+			/*
+			35 ?> 3 // Beispiel: Datensatz loschen
+			36 + Bitte geben Sie den zu loschenden Datensatz an
+			37 PosID ?> 502
+			38 + Datensatz wurde geloscht.*/
+			cout << "+ Bitte geben Sie den zu loeschenden Datensatz an" << endl << "PosID ?> ";
+			string posID;
+			getline(cin, posID);
+			if (tree->remove(stoi(posID)))
+				cout << "+ Datensatz wurde geloescht." << endl;
+			else
+				cout << "+ Kein Datensatz gefunden." << endl;
 		}
 		else if (input == "4") //Search
 		{
-			//TODO: Search
+			/*29 ?> 4 // Beispiel: Datensatz suchen
+			30 + Bitte geben Sie den zu suchenden Datensatz an
+			Name ?> Schmitt
+			32 + Fundstellen:
+			33 NodeID: 4, Name: Schmitt, Alter: 1, Einkommen: 500, PLZ: 2, PosID: 503*/
+			cout << "+ Bitte geben Sie den zu suchenden Datensatz an" << endl << "Name ?> ";
+			string name;
+			getline(cin, name);
+			vector<TreeNode*> results = tree->search(name);
+			if (results.empty())
+			{
+				cout << "+ Keine Fundstellen." << endl;
+			}
+			else
+			{
+				cout << "+ Fundstellen:" << endl;
+				for (unsigned i = 0; i < results.size(); i++)
+				{
+					results[i]->printData();
+				}
+			}
 		}
 		else if (input == "5") //Print
 		{
-			//TODO: Print
+			tree->print();
 		}
 
 	} while (input != "quit");
+
 	return 0;
 }

@@ -6,6 +6,16 @@ TreeNode::TreeNode()
 {
 }
 
+TreeNode::TreeNode(string Name, int Alter, double Einkommen, int PLZ)
+{
+	this->Name = Name;
+	this->Alter = Alter;
+	this->Einkommen = Einkommen;
+	this->PLZ = PLZ;
+
+	this->NodePosID = Alter + PLZ + int(Einkommen);
+}
+
 
 TreeNode::~TreeNode()
 {
@@ -59,4 +69,9 @@ void TreeNode::printData()
 		<< ", Einkommen: " << to_string(this->Einkommen)
 		<< ", PLZ: " << to_string(this->PLZ)
 		<< ", PosID: " << to_string(this->NodePosID) << endl;
+}
+
+void TreeNode::setID(int ID)
+{
+	this->NodeID = ID;
 }
