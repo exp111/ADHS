@@ -200,8 +200,27 @@ bool List<T>::swap(T key1, T key2)
 	if (firstKnoten == nullptr || secondKnoten == nullptr)
 		return false;
 
-	firstKnoten->key = key2;
-	secondKnoten->key = key1;
+	//firstKnoten->key = key2; //Ghetto method
+	//secondKnoten->key = key1;
+	//return true;
+
+	Node<T>* firstPrev = firstKnoten->prev;
+	Node<T>* firstNext = firstKnoten->next;
+
+	Node<T>* secondPrev = secondKnoten->prev;
+	Node<T>* secondNext = secondKnoten->next;
+
+	//First
+	firstKnoten->prev = secondPrev;
+	secondPrev->next = firstKnoten;
+	firstKnoten->next = secondNext;
+	secondNext->prev = firstKnoten;
+
+	//Second
+	secondKnoten->prev = firstPrev;
+	firstPrev->next = secondKnoten;
+	secondKnoten->next = firstNext;
+	firstNext->prev = secondKnoten;
 	return true;
 }
 

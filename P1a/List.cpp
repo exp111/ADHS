@@ -139,8 +139,27 @@ bool List::swap(int key1, int key2)
 	if (firstKnoten == nullptr || secondKnoten == nullptr)
 		return false;
 
-	firstKnoten->key = key2;
-	secondKnoten->key = key1;
+	//firstKnoten->key = key2; //Ghetto method
+	//secondKnoten->key = key1;
+	//return true;
+
+	Node* firstPrev = firstKnoten->prev;
+	Node* firstNext = firstKnoten->next;
+
+	Node* secondPrev = secondKnoten->prev;
+	Node* secondNext = secondKnoten->next;
+
+	//First
+	firstKnoten->prev = secondPrev;
+	secondPrev->next = firstKnoten;
+	firstKnoten->next = secondNext;
+	secondNext->prev = firstKnoten;
+
+	//Second
+	secondKnoten->prev = firstPrev;
+	firstPrev->next = secondKnoten;
+	secondKnoten->next = firstNext;
+	firstNext->prev = secondKnoten;
 	return true;
 }
 int List::size(void)
