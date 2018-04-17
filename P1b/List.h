@@ -210,17 +210,40 @@ bool List<T>::swap(T key1, T key2)
 	Node<T>* secondPrev = secondKnoten->prev;
 	Node<T>* secondNext = secondKnoten->next;
 
-	//First
-	firstKnoten->prev = secondPrev;
-	secondPrev->next = firstKnoten;
-	firstKnoten->next = secondNext;
-	secondNext->prev = firstKnoten;
+	if (firstPrev == secondKnoten || secondNext == firstKnoten)
+	{
+		firstKnoten->prev = secondPrev;
+		firstKnoten->next = secondKnoten;
+		secondKnoten->prev = firstKnoten;
+		secondKnoten->next = firstNext;
 
-	//Second
-	secondKnoten->prev = firstPrev;
-	firstPrev->next = secondKnoten;
-	secondKnoten->next = firstNext;
-	firstNext->prev = secondKnoten;
+		firstNext->prev = secondKnoten;
+		secondPrev->next = firstKnoten;
+	}
+	else if (secondPrev == firstKnoten || firstNext == secondKnoten)
+	{
+		secondKnoten->prev = firstPrev;
+		secondKnoten->next = firstKnoten;
+		firstKnoten->prev = secondKnoten;
+		firstKnoten->next = secondNext;
+
+		secondNext->prev = firstKnoten;
+		firstPrev->next = secondKnoten;
+	}
+	else
+	{
+		//First
+		firstKnoten->prev = secondPrev;
+		secondPrev->next = firstKnoten;
+		firstKnoten->next = secondNext;
+		secondNext->prev = firstKnoten;
+
+		//Second
+		secondKnoten->prev = firstPrev;
+		firstPrev->next = secondKnoten;
+		secondKnoten->next = firstNext;
+		firstNext->prev = secondKnoten;
+	}
 	return true;
 }
 
