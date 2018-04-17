@@ -15,7 +15,10 @@ public:
 	Tree();
 	~Tree();
 
-	void add(TreeNode* node);
+	void Tree::getChilds(vector<TreeNode*> &list, TreeNode* anker);
+	vector<TreeNode*> Tree::getChilds(TreeNode* anker);
+
+	void add(TreeNode* node, bool increaseSize = true);
 	void addRecursive(TreeNode* anker, TreeNode* node);
 	void deleteWithChilds(TreeNode * toDelete);
 	bool removeRecursive(TreeNode * anker, int posID);

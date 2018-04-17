@@ -8,10 +8,13 @@ Tree::~Tree()
 	deleteWithChilds(anker);
 }
 
-void Tree::add(TreeNode * node)
+void Tree::add(TreeNode * node, bool increaseSize)
 {
-	node->NodeID = size;
-	size++;
+	if (increaseSize)
+	{
+		node->NodeID = size;
+		size++;
+	}
 
 	if (anker == nullptr)
 	{
@@ -55,12 +58,36 @@ void Tree::deleteWithChilds(TreeNode* toDelete)
 	delete toDelete;
 }
 
+void Tree::getChilds(vector<TreeNode*> &list, TreeNode* anker)
+{
+	if (anker == nullptr)
+		return;
+
+	list.push_back(anker);
+
+	getChilds(list, anker->links);
+	getChilds(list, anker->rechts);
+}
+
+vector<TreeNode*> Tree::getChilds(TreeNode* anker)
+{
+	vector<TreeNode*> list;
+
+	if (anker == nullptr)
+		return list;
+
+	getChilds(list, anker->links);
+	getChilds(list, anker->rechts);
+
+	return list;
+}
+
 bool Tree::removeRecursive(TreeNode* anker, int posID)
 {
 	if (anker == nullptr)
 		return false;
 
-	if (posID > anker->NodePosID)
+	/*if (posID > anker->NodePosID)
 	{
 		return removeRecursive(anker->rechts, posID);
 	}
@@ -74,6 +101,42 @@ bool Tree::removeRecursive(TreeNode* anker, int posID)
 	else //if (posID < anker->NodePosID)
 	{
 		return removeRecursive(anker->rechts, posID);
+	}*/
+	
+	if (posID > anker->NodePosID)
+	{
+		if (anker->rechts != nullptr && anker->rechts->NodePosID == posID)
+		{
+			vector<TreeNode*> childs = getChilds(anker->rechts);
+			delete anker->rechts;
+			anker->rechts = nullptr;
+			for (unsigned i = 0; i < childs.size(); i++)
+			{
+				this->add(childs[i], false);
+			}
+			return true;
+		}
+		return removeRecursive(anker->rechts, posID);
+	}
+	else if (posID == anker->NodePosID)
+	{
+		//TODO: FIXME removeRecursive()
+		return false;
+	}
+	else //if (posID < anker->NodePosID)
+	{
+		if (anker->links != nullptr && anker->links->NodePosID == posID)
+		{
+			vector<TreeNode*> childs = getChilds(anker->links);
+			delete anker->links;
+			anker->links = nullptr;
+			for (unsigned i = 0; i < childs.size(); i++)
+			{
+				this->add(childs[i], false);
+			}
+			return true;
+		}
+		return removeRecursive(anker->links, posID);
 	}
 }
 

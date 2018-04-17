@@ -105,7 +105,6 @@ int main()
 		}
 		else if (input == "2") //Add .csv
 		{
-			//TODO: Add csv
 			/* ?> 2 // Beispiel: CSV Import
 			50 + Mochten Sie die Daten aus der Datei "ExportZielanalyse.csv" importieren (j/n) ?> j
 			51 + Daten wurden dem Baum hinzugefugt. */
