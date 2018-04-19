@@ -12,9 +12,13 @@ int main(int argc, char** argv) {
 	//***************
 	// file streams *
 	//***************
-	ofstream quicksort;
+	ofstream textFile;
 
-	quicksort.open("quicksort.txt", ios::out | ios::app);
+#ifdef _MERGESORT
+	textFile.open("mergeSort.txt", ios::out | ios::app);
+#else
+	textFile.open("quickSort.txt", ios::out | ios::app);
+#endif
 
 
 	//******************** 
@@ -34,20 +38,33 @@ int main(int argc, char** argv) {
 	vector<int> array, temp_array;
 	vector<double> A, B, C;
 
-
+	//********************************************************************
 	//Test If Algorithm works
-	/*MyAlgorithms::randomizeArray(array, 25);
+	//********************************************************************
+#ifdef _DEBUG
+	MyAlgorithms::randomizeArray(array, 25);
 	for (int i = 0; i < 25; i++)
 	{
 		std::cout << array[i] << ",";
 	}
 	std::cout << endl;
+
+#ifdef _MERGESORT
+	int mid = array.size() / 2;
+	temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
+	array = vector<int>(array.begin(), array.begin() + mid); //First Part
+	MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
+#else
 	MyAlgorithms::QuickSort(array, 0, array.size() - 1);
+#endif
+
 	for (int i = 0; i < 25; i++)
 	{
 		std::cout << array[i] << ",";
 	}
-	std::system("PAUSE");*/
+	std::cout << endl << "IsSorted: " << MyAlgorithms::isSorted(array) << endl;
+	std::system("PAUSE");
+#endif
 
 	//********************************************************
 	//benchmark main loop (run only ONE algorithm at a time) *
@@ -77,8 +94,15 @@ int main(int argc, char** argv) {
 		//**********************
 		//  execute algorithm  *
 		//**********************
+#ifdef _MERGESORT
+		//Create new array
+		int mid = array.size() / 2;
+		temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
+		array = vector<int>(array.begin(), array.begin() + mid); //First Part
+		MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
+#else
 		MyAlgorithms::QuickSort(array, 0, array.size() - 1);
-
+#endif
 
 		//***************
 		//  stop clock  *
@@ -88,7 +112,7 @@ int main(int argc, char** argv) {
 		//*************************
 		//  write results to file *
 		//*************************
-		quicksort << n << "\t" << setprecision(10) << scientific << dtime << endl;
+		textFile << n << "\t" << setprecision(10) << scientific << dtime << endl;
 
 	}
 
@@ -96,5 +120,5 @@ int main(int argc, char** argv) {
 	//  close file handles *
 	//**********************
 
-	quicksort.close();
+	textFile.close();
 }

@@ -46,6 +46,38 @@ namespace MyAlgorithms
 	//************
 	// MergeSort *
 	//************
+	void merge(vector<int> &a, vector<int> &b)
+	{
+		vector<int> tmp;
+		while (!a.empty() && !b.empty())
+		{
+			if (a.empty()) //No need to check then
+			{
+				tmp.push_back(b.front());
+				b.erase(b.begin());
+			}
+			else if (b.empty()) //No need to check then
+			{
+				tmp.push_back(a.front());
+				a.erase(a.begin());
+			}
+			else //Compare front elements and push smaller
+			{
+				if (a.front() <= b.front())
+				{
+					tmp.push_back(a.front());
+					a.erase(a.begin());
+				}
+				else
+				{
+					tmp.push_back(b.front());
+					b.erase(b.begin());
+				}
+			}
+		}
+		a = tmp;
+	}
+
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)
 	{
 		//TODO: MergeSort
@@ -58,9 +90,10 @@ namespace MyAlgorithms
 			int mid = (low + high) / 2;
 			MergeSort(a, b, low, mid);
 			MergeSort(a, b, mid + 1, low);
-		}
 
-		//Merge Array
+			//Merge Array
+			merge(a, b);
+		}
 	}
 
 	//************
@@ -141,5 +174,16 @@ namespace MyAlgorithms
 
 		for (int i = 0; i < array.size(); i++)
 			array[i] = rand() % 1000000;
+	}
+	bool isSorted(vector<int> array)
+	{
+		if (array.size() < 2)
+			return true;
+		for (int i = 1; i < array.size(); i++)
+		{
+			if (array[i] < array[i - 1])
+				return false;
+		}
+		return true;
 	}
 }

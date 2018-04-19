@@ -56,6 +56,7 @@ namespace MyAlgorithms {
   double fRand(double fMin, double fMax);
   void randomizeMatrix(vector<double> &matrix, int n);   //fills vector<double> with n*n random double values
   void randomizeArray(vector<int> &array, int n);   //fills vector<int> with n random integer values
+  bool isSorted(vector<int> array);
   
 }
 #endif 

@@ -260,3 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 *.zip
+
+*.exe
+*.tlog
+*.idb
+*.enc
