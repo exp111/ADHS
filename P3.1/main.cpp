@@ -16,6 +16,8 @@ int main(int argc, char** argv) {
 
 #ifdef _MERGESORT
 	textFile.open("mergeSort.txt", ios::out | ios::app);
+#elif _HEAPSORT
+	textFile.open("heapSort.txt", ios::out | ios::app);
 #else
 	textFile.open("quickSort.txt", ios::out | ios::app);
 #endif
@@ -54,6 +56,8 @@ int main(int argc, char** argv) {
 	temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
 	array = vector<int>(array.begin(), array.begin() + mid); //First Part
 	MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
+#elif _HEAPSORT
+	MyAlgorithms::HeapSort(array, array.size() - 1);
 #else
 	MyAlgorithms::QuickSort(array, 0, array.size() - 1);
 #endif
@@ -100,6 +104,8 @@ int main(int argc, char** argv) {
 		temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
 		array = vector<int>(array.begin(), array.begin() + mid); //First Part
 		MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
+#elif _HEAPSORT
+		MyAlgorithms::HeapSort(array, array.size() - 1);
 #else
 		MyAlgorithms::QuickSort(array, 0, array.size() - 1);
 #endif

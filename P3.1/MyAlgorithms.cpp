@@ -46,10 +46,11 @@ namespace MyAlgorithms
 	//************
 	// MergeSort *
 	//************
-	void merge(vector<int> &a, vector<int> &b)
+	void merge(vector<int> &a, vector<int> &b, int low, int high)
 	{
 		vector<int> tmp;
-		while (!a.empty() && !b.empty())
+		int i = low, j = high;
+		while (i < high)
 		{
 			if (a.empty()) //No need to check then
 			{
@@ -92,17 +93,39 @@ namespace MyAlgorithms
 			MergeSort(a, b, mid + 1, low);
 
 			//Merge Array
-			merge(a, b);
+			merge(a, b, low, high);
 		}
 	}
 
 	//************
 	// Heapsort  *
 	//************
+	void heapify(vector<int> &a, int n)
+	{
+		//TODO: Heapify()
+	}
 
 	void HeapSort(vector<int> &a, int n)
 	{
 		//TODO: HeapSort
+		//Create Heap (weird tree like structure)
+		//The first element is the highest
+		//Move the first element to the last in the heap
+		//Decrease Heapsize
+		//"Heapify" the array again
+		//repeat till size <= 1
+
+		int heapSize = n;
+		//TODO: Is it allowed to use this make_heap?
+		make_heap(a.begin(), a.end());
+		
+		while (heapSize > 0) //Till only one element is unsorted (well it's sorted then cuz it's the lowest)
+		{
+			iter_swap(a.begin(), a.begin() + heapSize); //Swap highest (first cause heap)
+			heapSize--; //So we don't swap accidentaly the last elements (the now highest)
+			//Heapify
+			heapify(a, heapSize);
+		}
 	}
 
 	//************
