@@ -124,14 +124,14 @@ bool Tree::removeRecursive(TreeNode* anker, int posID)
 		//TODO: FIXME removeRecursive()
 		//return false;
 		vector<TreeNode*> childs = getChilds(anker);
-		TreeNode* newAnker = anker->rechts != nullptr ? anker->rechts : anker->links;
+		//TreeNode* newAnker = anker->rechts != nullptr ? anker->rechts : anker->links != nullptr ? anker->links : nullptr;
 		delete anker;
 		this->anker = nullptr;
-		if (newAnker != nullptr)
+		/*if (newAnker != nullptr)
 		{
 			newAnker->links = nullptr;
 			newAnker->rechts = nullptr;
-		}
+		}*/
 		for (unsigned i = 0; i < childs.size(); i++)
 		{
 			this->add(childs[i], false);
