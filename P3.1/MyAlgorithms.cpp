@@ -17,9 +17,9 @@ namespace MyAlgorithms
 		do
 		{
 			while (i < right - 1 && arr[i] < pivot)//Finde Element von links das größer als pivot ist
-				i++; 
+				i++;
 			while (j > left && arr[j] >= pivot)  //Finde ELement von rechts das kleiner als pivot ist
-				j--;	 
+				j--; 
 
 			if (i < j) //Tausche wenn i < j ist bzw der größere wert links ist
 				iter_swap(arr.begin() + i, arr.begin() + j);
@@ -38,7 +38,7 @@ namespace MyAlgorithms
 			//Teile Liste in 2 Teile:
 			int teiler = teile(arr, left, right);
 			//Rekursiv die Teillisten sortieren
-			QuickSort(arr, left, teiler);
+			QuickSort(arr, left, teiler); //Alle links vom teiler sollten kleiner als pivot sein
 			QuickSort(arr, teiler + 1, right);
 		}
 	}
@@ -49,6 +49,18 @@ namespace MyAlgorithms
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)
 	{
 		//TODO: MergeSort
+		//Teile Array in möglichst gleiche hälften
+		//Repeat till array sizes sind == 1
+		//Vergleiche vordere elemente der arrays und merge die kleinsten zuerst in ein neues array
+		//Repeat till all sorted
+		if (low < high)
+		{
+			int mid = (low + high) / 2;
+			MergeSort(a, b, low, mid);
+			MergeSort(a, b, mid + 1, low);
+		}
+
+		//Merge Array
 	}
 
 	//************
