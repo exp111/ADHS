@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream> 
 #include <iomanip> 
+#include <string>
 #include <vector>
 #include <omp.h>
 #include "MyAlgorithms.h"
@@ -32,6 +33,22 @@ int main(int argc, char** argv) {
 	int n_step = 1000;
 	int n_end = 100000;
 	int numThreads = 4; //only for matrix multiplication
+
+	//********************
+	//* Set Window Title *
+	//********************
+	string titleCommand = "title Current Algorithm: ";
+#ifdef _MERGESORT
+	titleCommand += "Merge Sort";
+#elif _HEAPSORT
+	titleCommand += "Heap Sort";
+#else
+	titleCommand += "Quick Sort";
+#endif
+	titleCommand += ". N (start, step, end): " + to_string(n_start) + 
+					", " + to_string(n_step) + 
+					", " + to_string(n_end) + ".";
+	system(titleCommand.c_str());
 
 	//********************************************************************
 	//data structures for sorting algorithms (int) and matrices (double) *

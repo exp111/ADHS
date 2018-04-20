@@ -57,6 +57,6 @@ namespace MyAlgorithms {
   void randomizeMatrix(vector<double> &matrix, int n);   //fills vector<double> with n*n random double values
   void randomizeArray(vector<int> &array, int n);   //fills vector<int> with n random integer values
   bool isSorted(vector<int> array);
-  
+  void iterSwap(vector<int> &array, int i1, int i2);
 }
 #endif 

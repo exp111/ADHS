@@ -22,11 +22,11 @@ namespace MyAlgorithms
 				j--; 
 
 			if (i < j) //Tausche wenn i < j ist bzw der größere wert links ist
-				iter_swap(arr.begin() + i, arr.begin() + j);
+				iterSwap(arr, i, j);
 		} while (i < j);
 
 		if (arr[i] > arr[right])
-			iter_swap(arr.begin() + i, arr.begin() + right);//swap
+			iterSwap(arr, i, right);//swap
 
 		return i;
 	}
@@ -100,15 +100,37 @@ namespace MyAlgorithms
 	//************
 	// Heapsort  *
 	//************
-	void heapify(vector<int> &a, int n)
+	void heapify(vector<int> &a, int n, int i)
 	{
-		//TODO: Heapify()
+		int left = 2 * i + 1;
+		int right = 2 * i + 2;
+		int largest = i;
+
+		//Is left child in the heap && larger?
+		if (left <= n && a[left] > a[largest])
+		{
+			largest = left;
+		}
+
+		//Is right child in the heap && larger?
+		if (right <= n && a[right] > a[largest])
+		{
+			largest = right;
+		}
+
+		if (largest != i) //Don't need to swap if we've the largest
+		{
+			//Swap the larger up
+			iterSwap(a, i, largest);
+
+			//Now check again recursive
+			heapify(a, n, largest);
+		}
 	}
 
 	void HeapSort(vector<int> &a, int n)
 	{
-		//TODO: HeapSort
-		//Create Heap (weird tree like structure)
+		//Create Heap (weird tree like structure; we don't actually create a tree here; it's more like a mental tree)
 		//The first element is the highest
 		//Move the first element to the last in the heap
 		//Decrease Heapsize
@@ -116,16 +138,21 @@ namespace MyAlgorithms
 		//repeat till size <= 1
 
 		int heapSize = n;
-		//TODO: Is it allowed to use this make_heap?
-		make_heap(a.begin(), a.end());
+
+		//Make Heap
+		//Start at the last child - 1; 
+		//n/2 cause we split the array into two sides (left/right) and both sides have around the same amount
+		//-1 cause it's useless if we start at the last cause why should we trade the last with their childs (which don't exist)
+		//Then we work our way up the heap
+		for (int i = n / 2 - 1; i >= 0; i--)
+			heapify(a, n, i);
 		
 		while (heapSize > 0) //Till only one element is unsorted (well it's sorted then cuz it's the lowest)
 		{
-			iter_swap(a.begin(), a.begin() + heapSize); //Swap highest (first cause heap)
+			iterSwap(a, 0, heapSize); //Swap highest (first cause heap)
 			heapSize--; //So we don't swap accidentaly the last elements (the now highest)
-			//Heapify
-			//TODO: Use heapify function; this is way2slow too
-			make_heap(a.begin(), a.begin() + heapSize);
+			//Heapify again (as we now have a smaller anker node; the childs should be the largest element on the heap and should be swapped to top)
+			heapify(a, heapSize, 0);
 		}
 	}
 
@@ -209,5 +236,10 @@ namespace MyAlgorithms
 				return false;
 		}
 		return true;
+	}
+
+	void iterSwap(vector<int> &array, int i1, int i2)
+	{
+		iter_swap(array.begin() + i1, array.begin() + i2);
 	}
 }
