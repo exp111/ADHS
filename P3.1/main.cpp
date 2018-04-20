@@ -15,11 +15,11 @@ int main(int argc, char** argv) {
 	ofstream textFile;
 
 #ifdef _MERGESORT
-	textFile.open("mergeSort.txt", ios::out | ios::app);
+	textFile.open("mergeSort.txt", ios::out);
 #elif _HEAPSORT
-	textFile.open("heapSort.txt", ios::out | ios::app);
+	textFile.open("heapSort.txt", ios::out);
 #else
-	textFile.open("quickSort.txt", ios::out | ios::app);
+	textFile.open("quickSort.txt", ios::out);
 #endif
 
 

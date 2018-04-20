@@ -124,7 +124,8 @@ namespace MyAlgorithms
 			iter_swap(a.begin(), a.begin() + heapSize); //Swap highest (first cause heap)
 			heapSize--; //So we don't swap accidentaly the last elements (the now highest)
 			//Heapify
-			heapify(a, heapSize);
+			//TODO: Use heapify function; this is way2slow too
+			make_heap(a.begin(), a.begin() + heapSize);
 		}
 	}
 
