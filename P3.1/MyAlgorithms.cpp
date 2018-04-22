@@ -48,35 +48,48 @@ namespace MyAlgorithms
 	//************
 	void merge(vector<int> &a, vector<int> &b, int low, int high)
 	{
-		vector<int> tmp;
-		int i = low, j = high;
-		while (i < high)
+		//TODO: merge()
+		int leftEnd = (high + low) / 2;
+		int rightStart = leftEnd + 1;
+		int size = high - low + 1;
+
+		int left = low;
+		int right = rightStart;
+		int index = low;
+
+		while (left <= leftEnd && right <= high)
 		{
-			if (a.empty()) //No need to check then
+			if (a[left] <= a[right])
 			{
-				tmp.push_back(b.front());
-				b.erase(b.begin());
+				b[index] = a[left];
+				left++;
 			}
-			else if (b.empty()) //No need to check then
+			else
 			{
-				tmp.push_back(a.front());
-				a.erase(a.begin());
+				b[index] = a[right];
+				right++;
 			}
-			else //Compare front elements and push smaller
-			{
-				if (a.front() <= b.front())
-				{
-					tmp.push_back(a.front());
-					a.erase(a.begin());
-				}
-				else
-				{
-					tmp.push_back(b.front());
-					b.erase(b.begin());
-				}
-			}
+			index++;
 		}
-		a = tmp;
+
+		//Copy shit
+		for (int i = left, j = index; i < leftEnd - left + 1; i++, j++)
+		{
+			//a[i] = b[index];
+			b[j] = a[i];
+		}
+
+		for (int i = right, j = index; i < high - right + 1; i++, j++)
+		{
+			//a[i] = b[index];
+			b[j] = a[i];
+		}
+
+		for (int i = low; i < size; i++)
+		{
+			//b[i] = a[index];
+			a[i] = b[i];
+		}
 	}
 
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)

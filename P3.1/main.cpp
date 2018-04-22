@@ -8,20 +8,54 @@
 
 using namespace std;
 
+enum CHOICES
+{
+	QUICKSORT = 1,
+	HEAPSORT = 2,
+	MERGESORT,
+	SHELLSORT
+};
+
 int main(int argc, char** argv) {
+
+
+	cout << "Choose the algorithm:" << endl
+		<< "1) Quick Sort" << endl
+		<< "2) Heap Sort" << endl
+		<< "3) Merge Sort" << endl
+		<< "4) Shell Sort" << endl
+		<< "9) All" << endl
+		<< "? > ";
+
+	int choice = 0;
+	cin >> choice;
 
 	//***************
 	// file streams *
 	//***************
 	ofstream textFile;
+	string fileName;
 
-#ifdef _MERGESORT
-	textFile.open("mergeSort.txt", ios::out);
-#elif _HEAPSORT
-	textFile.open("heapSort.txt", ios::out);
-#else
-	textFile.open("quickSort.txt", ios::out);
-#endif
+	switch (choice)
+	{
+	case QUICKSORT:
+		fileName = "quicksort.txt";
+		break;
+	case HEAPSORT:
+		fileName = "heapsort.txt";
+		break;
+	case MERGESORT:
+		fileName = "mergesort.txt";
+		break;
+	case SHELLSORT:
+		fileName = "shellsort.txt";
+		break;
+	default:
+		cout << "Not a valid choice. Frick off." << endl;
+		exit(1);
+		break;
+	}
+	textFile.open(fileName, ios::out);
 
 
 	//******************** 
@@ -38,13 +72,25 @@ int main(int argc, char** argv) {
 	//* Set Window Title *
 	//********************
 	string titleCommand = "title Current Algorithm: ";
-#ifdef _MERGESORT
-	titleCommand += "Merge Sort";
-#elif _HEAPSORT
-	titleCommand += "Heap Sort";
-#else
-	titleCommand += "Quick Sort";
-#endif
+
+	switch (choice)
+	{
+	case QUICKSORT:
+		titleCommand += "Quick Sort";
+		break;
+	case HEAPSORT:
+		titleCommand += "Heap Sort";
+		break;
+	case MERGESORT:
+		titleCommand += "Merge Sort";
+		break;
+	case SHELLSORT:
+		titleCommand += "Shell Sort";
+		break;
+	default:
+		break;
+	}
+
 	titleCommand += ". N (start, step, end): " + to_string(n_start) + 
 					", " + to_string(n_step) + 
 					", " + to_string(n_end) + ".";
@@ -68,16 +114,28 @@ int main(int argc, char** argv) {
 	}
 	std::cout << endl;
 
-#ifdef _MERGESORT
-	int mid = array.size() / 2;
-	temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
-	array = vector<int>(array.begin(), array.begin() + mid); //First Part
-	MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
-#elif _HEAPSORT
-	MyAlgorithms::HeapSort(array, array.size() - 1);
-#else
-	MyAlgorithms::QuickSort(array, 0, array.size() - 1);
-#endif
+	switch (choice)
+	{
+	case QUICKSORT:
+	{
+		MyAlgorithms::QuickSort(array, 0, (int)array.size() - 1);
+		break;
+	}
+	case HEAPSORT:
+		MyAlgorithms::HeapSort(array, (int)array.size() - 1);
+		break;
+	case MERGESORT:
+	{
+		temp_array = vector<int>(array.size()); //Second Part of the Array
+		MyAlgorithms::MergeSort(array, temp_array, 0, (int)array.size() - 1);
+		break;
+	}
+	case SHELLSORT:
+		MyAlgorithms::ShellSort(array, (int)array.size() - 1);
+		break;
+	default:
+		break;
+	}
 
 	for (int i = 0; i < 25; i++)
 	{
@@ -115,17 +173,30 @@ int main(int argc, char** argv) {
 		//**********************
 		//  execute algorithm  *
 		//**********************
-#ifdef _MERGESORT
-		//Create new array
-		int mid = array.size() / 2;
-		temp_array = vector<int>(array.begin() + mid + 1, array.end()); //Second Part of the Array
-		array = vector<int>(array.begin(), array.begin() + mid); //First Part
-		MyAlgorithms::MergeSort(array, temp_array, array.front(), temp_array.back());
-#elif _HEAPSORT
-		MyAlgorithms::HeapSort(array, array.size() - 1);
-#else
-		MyAlgorithms::QuickSort(array, 0, array.size() - 1);
-#endif
+		switch (choice)
+		{
+		case QUICKSORT:
+		{
+			MyAlgorithms::QuickSort(array, 0, (int)array.size() - 1);
+			break;
+		}
+		case HEAPSORT:
+		{
+			MyAlgorithms::HeapSort(array, (int)array.size() - 1);
+			break;
+		}
+		case MERGESORT:
+		{
+			temp_array = vector<int>(array.size()); //Second Part of the Array
+			MyAlgorithms::MergeSort(array, temp_array, 0, (int)array.size() - 1);
+			break;
+		}
+		case SHELLSORT:
+			MyAlgorithms::ShellSort(array, (int)array.size() - 1);
+			break;
+		default:
+			break;
+		}
 
 		//***************
 		//  stop clock  *
