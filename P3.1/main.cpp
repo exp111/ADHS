@@ -79,8 +79,9 @@ int main(int argc, char** argv) {
 	//Test If Algorithm works
 	//********************************************************************
 #ifdef _DEBUG
-	int testInt = 1;
+	int testInt = 25;
 	MyAlgorithms::randomizeArray(array, testInt);
+	
 	for (int i = 0; i < testInt; i++)
 	{
 		std::cout << array[i] << ",";

@@ -174,9 +174,9 @@ namespace MyAlgorithms
 		//Make Heap
 		//Start at the last child - 1; 
 		//n/2 cause we split the array into two sides (left/right) and both sides have around the same amount
-		//-1 cause it's useless if we start at the last cause why should we trade the last with their childs (which don't exist)
+		////-1 cause it's useless if we start at the last cause why should we trade the last with their childs (which don't exist)
 		//Then we work our way up the heap
-		for (int i = n / 2 - 1; i >= 0; i--)
+		for (int i = n / 2; i >= 0; i--)
 			heapify(a, n, i);
 		
 		while (heapSize > 0) //Till only one element is unsorted (well it's sorted then cuz it's the lowest)
@@ -193,7 +193,6 @@ namespace MyAlgorithms
 	//************
 	void ShellSort(vector<int> &a, int n)
 	{
-		//TODO: ShellSort mit Hibbard Folge (Hi = 2H(i-1) + 1)
 		//Starte bei gap = n/2
 		//Starte bei i = gap und gehe davon hoch bis n
 		//Vergleiche element bei j(=i) mit element bei j-gap ob kleiner und swappe wenn a[j] kleiner
@@ -291,6 +290,7 @@ namespace MyAlgorithms
 		for (int i = 0; i < array.size(); i++)
 			array[i] = rand() % 1000000;
 	}
+
 	bool isSorted(vector<int> array)
 	{
 		if (array.size() < 2)
