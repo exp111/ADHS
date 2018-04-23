@@ -201,13 +201,15 @@ namespace MyAlgorithms
 
 		//Habard's Increament
 		vector<int> gaps;
-		for (int i = 0, int j = 0; j < n - 1; i++) {
+		for (int i = 0, j = 0; j < n; i++) {
 			j = pow(2, i + 1) - 1;
 			gaps.push_back(j);
 		}
+		//Shitty fix
+		gaps.pop_back();
 
 		//Starte mit gap; der später verkleinert wird
-		for (int s = gaps.size(); int gap = n / 2; gap > 0; gap /= 2)
+		for (int s = gaps.size() - 1, gap = gaps[s]; gap > 0 && s >= 0; s--, gap = gaps[s])
 		{
 			//Von gap hochgehen
 			for (int i = gap; i < n; i++)
