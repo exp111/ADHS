@@ -46,10 +46,10 @@ namespace MyAlgorithms
 	//************
 	// MergeSort *
 	//************
-	void merge(vector<int> &a, vector<int> &b, int low, int high)
+	void merge(vector<int> &a, vector<int> &b, int low, int mid, int high)
 	{
 		//TODO: merge()
-		int leftEnd = (high + low) / 2;
+		/*int leftEnd = (high + low) / 2;
 		int rightStart = leftEnd + 1;
 		int size = high - low + 1;
 
@@ -89,7 +89,26 @@ namespace MyAlgorithms
 		{
 			//b[i] = a[index];
 			a[i] = b[i];
-		}
+		}*/
+
+		int i, j, k;
+
+		// beide Hälften von a in Hilfsarray b kopieren
+		for (i = low; i <= high; i++)
+			b[i] = a[i];
+
+		i = low; j = mid + 1; k = low;
+		// jeweils das nächstgrößte Element zurückkopieren
+		while (i <= mid && j <= high)
+			if (b[i] <= b[j])
+				a[k++] = b[i++];
+			else
+				a[k++] = b[j++];
+
+		// Rest der vorderen Hälfte falls vorhanden zurückkopieren
+		while (i <= mid)
+			a[k++] = b[i++];
+
 	}
 
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)
@@ -106,7 +125,7 @@ namespace MyAlgorithms
 			MergeSort(a, b, mid + 1, low);
 
 			//Merge Array
-			merge(a, b, low, high);
+			merge(a, b, low, mid, high);
 		}
 	}
 
@@ -174,7 +193,37 @@ namespace MyAlgorithms
 	//************
 	void ShellSort(vector<int> &a, int n)
 	{
-		//TODO: ShellSort
+		//TODO: ShellSort mit Hibbard Folge (Hi = 2H(i-1) + 1)
+		//Starte bei gap = n/2
+		//Starte bei i = gap und gehe davon hoch bis n
+		//Vergleiche element bei j(=i) mit element bei j-gap ob kleiner und swappe wenn a[j] kleiner
+		//Gap /2; wenn gap == 0 quit
+
+		//Habard's Increament
+		vector<int> gaps;
+		for (int i = 0, int j = 0; j < n - 1; i++) {
+			j = pow(2, i + 1) - 1;
+			gaps.push_back(j);
+		}
+
+		//Starte mit gap; der später verkleinert wird
+		for (int s = gaps.size(); int gap = n / 2; gap > 0; gap /= 2)
+		{
+			//Von gap hochgehen
+			for (int i = gap; i < n; i++)
+			{
+				// A[i] zwischenspeichern
+				int temp = a[i];
+
+				// alle elemente die kleiner als a[i] und bei a[i-gap*x] sind hochschieben || direkt swappen (inefficient tho)
+				int j = i;
+				for (; j >= gap && a[j - gap] > temp; j -= gap)
+					a[j] = a[j - gap];
+
+				//temp nun an der richtigen stelle wieder einfügen
+				a[j] = temp;
+			}
+		}
 	}
 
 	//************************************

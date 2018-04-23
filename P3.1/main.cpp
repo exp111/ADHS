@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
 		break;
 	}
 	case SHELLSORT:
-		MyAlgorithms::ShellSort(array, (int)array.size() - 1);
+		MyAlgorithms::ShellSort(array, (int)array.size());
 		break;
 	default:
 		break;
@@ -192,7 +192,7 @@ int main(int argc, char** argv) {
 			break;
 		}
 		case SHELLSORT:
-			MyAlgorithms::ShellSort(array, (int)array.size() - 1);
+			MyAlgorithms::ShellSort(array, (int)array.size());
 			break;
 		default:
 			break;
