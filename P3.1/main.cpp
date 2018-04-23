@@ -30,34 +30,6 @@ int main(int argc, char** argv) {
 	int choice = 0;
 	cin >> choice;
 
-	//***************
-	// file streams *
-	//***************
-	ofstream textFile;
-	string fileName;
-
-	switch (choice)
-	{
-	case QUICKSORT:
-		fileName = "quicksort.txt";
-		break;
-	case HEAPSORT:
-		fileName = "heapsort.txt";
-		break;
-	case MERGESORT:
-		fileName = "mergesort.txt";
-		break;
-	case SHELLSORT:
-		fileName = "shellsort.txt";
-		break;
-	default:
-		cout << "Not a valid choice. Frick off." << endl;
-		exit(1);
-		break;
-	}
-	textFile.open(fileName, ios::out);
-
-
 	//******************** 
 	//benchmark settings *
 	//********************
@@ -107,8 +79,9 @@ int main(int argc, char** argv) {
 	//Test If Algorithm works
 	//********************************************************************
 #ifdef _DEBUG
-	MyAlgorithms::randomizeArray(array, 25);
-	for (int i = 0; i < 25; i++)
+	int testInt = 1;
+	MyAlgorithms::randomizeArray(array, testInt);
+	for (int i = 0; i < testInt; i++)
 	{
 		std::cout << array[i] << ",";
 	}
@@ -137,13 +110,40 @@ int main(int argc, char** argv) {
 		break;
 	}
 
-	for (int i = 0; i < 25; i++)
+	for (int i = 0; i < testInt; i++)
 	{
 		std::cout << array[i] << ",";
 	}
 	std::cout << endl << "IsSorted: " << MyAlgorithms::isSorted(array) << endl;
 	std::system("PAUSE");
 #endif
+
+	//***************
+	// file streams *
+	//***************
+	ofstream textFile;
+	string fileName;
+
+	switch (choice)
+	{
+	case QUICKSORT:
+		fileName = "quicksort.txt";
+		break;
+	case HEAPSORT:
+		fileName = "heapsort.txt";
+		break;
+	case MERGESORT:
+		fileName = "mergesort.txt";
+		break;
+	case SHELLSORT:
+		fileName = "shellsort.txt";
+		break;
+	default:
+		cout << "Not a valid choice. Frick off." << endl;
+		exit(1);
+		break;
+	}
+	textFile.open(fileName, ios::out);
 
 	//********************************************************
 	//benchmark main loop (run only ONE algorithm at a time) *
