@@ -209,7 +209,7 @@ namespace MyAlgorithms
 		gaps.pop_back();
 
 		//Starte mit gap; der später verkleinert wird
-		for (int s = gaps.size() - 1, gap = gaps[s]; gap > 0 && s >= 0; s--, gap = gaps[s])
+		for (int s = gaps.size() - 1, gap = gaps[s]; gap > 0 && s >= 0; s--, gap = s >= 0 ? gaps[s] : 0)
 		{
 			//Von gap hochgehen
 			for (int i = gap; i < n; i++)
