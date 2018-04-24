@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 	double dtime;
 	int n_start = 1000;
 	int n_step = 1000;
-	int n_end = 100000;
+	int n_end = 1000000;
 	int numThreads = 4; //only for matrix multiplication
 
 	switch (choice)
