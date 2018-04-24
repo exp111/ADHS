@@ -199,10 +199,13 @@ namespace MyAlgorithms
 		int ldc = n;
 		double s = 0.0;
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
+		int i, j, k;
+
+#pragma omp parallel for num_threads(numThreads) private(i,j,k) shared(A,B,C)
+		for (i = 0; i < n; i++) {
+			for (j = 0; j < n; j++) {
 				s = 0.0;
-				for (int k = 0; k < n; k++) {
+				for (k = 0; k < n; k++) {
 					s = s + A[i * lda + k] * B[k * ldb + j];
 				}
 				C[i * ldc + j] = s;

@@ -20,7 +20,6 @@ enum CHOICES
 
 int main(int argc, char** argv) {
 
-
 	cout << "Choose the algorithm:" << endl
 		<< "1) Quick Sort" << endl
 		<< "2) Heap Sort" << endl
