@@ -49,66 +49,26 @@ namespace MyAlgorithms
 	void merge(vector<int> &a, vector<int> &b, int low, int mid, int high)
 	{
 		//TODO: merge()
-		/*int leftEnd = (high + low) / 2;
-		int rightStart = leftEnd + 1;
-		int size = high - low + 1;
-
-		int left = low;
-		int right = rightStart;
-		int index = low;
-
-		while (left <= leftEnd && right <= high)
-		{
-			if (a[left] <= a[right])
-			{
-				b[index] = a[left];
-				left++;
-			}
-			else
-			{
-				b[index] = a[right];
-				right++;
-			}
-			index++;
-		}
-
-		//Copy shit
-		for (int i = left, j = index; i < leftEnd - left + 1; i++, j++)
-		{
-			//a[i] = b[index];
-			b[j] = a[i];
-		}
-
-		for (int i = right, j = index; i < high - right + 1; i++, j++)
-		{
-			//a[i] = b[index];
-			b[j] = a[i];
-		}
-
-		for (int i = low; i < size; i++)
-		{
-			//b[i] = a[index];
-			a[i] = b[i];
-		}*/
 
 		int i, j, k;
 
-		// beide Hälften von a in Hilfsarray b kopieren
+		//temparray füllen
 		for (i = low; i <= high; i++)
 			b[i] = a[i];
 
 		i = low; j = mid + 1; k = low;
-		// jeweils das nächstgrößte Element zurückkopieren
+		//check both sites(i,j) & put smaller into a[k]
 		while (i <= mid && j <= high)
 			if (b[i] <= b[j])
 				a[k++] = b[i++];
 			else
 				a[k++] = b[j++];
 
-		// Rest der vorderen Hälfte falls vorhanden zurückkopieren
+		//falls im ersten array noch inhalt -> in a reinkopieren
 		while (i <= mid)
 			a[k++] = b[i++];
 
+		//no need to check zweites array cuz it's already at the right position then
 	}
 
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)
