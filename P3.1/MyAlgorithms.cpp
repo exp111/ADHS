@@ -81,7 +81,7 @@ namespace MyAlgorithms
 		{
 			int mid = (low + high) / 2;
 			MergeSort(a, b, low, mid);
-			MergeSort(a, b, mid + 1, low);
+			MergeSort(a, b, mid + 1, high);
 
 			//Merge Array
 			merge(a, b, low, mid, high);
