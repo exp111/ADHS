@@ -49,7 +49,6 @@ namespace MyAlgorithms
 	void merge(vector<int> &a, vector<int> &b, int low, int mid, int high)
 	{
 		//TODO: merge()
-
 		int i, j, k;
 
 		//temparray füllen

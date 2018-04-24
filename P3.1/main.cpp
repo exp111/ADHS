@@ -159,6 +159,7 @@ int main(int argc, char** argv) {
 
 		//sorting algorithms
 		MyAlgorithms::randomizeArray(array, n);
+		temp_array = vector<int>(n); //Empty Temp Array
 
 		//matrix multiplication
 		//if (n>800) { n_step=11; }
@@ -177,21 +178,14 @@ int main(int argc, char** argv) {
 		switch (choice)
 		{
 		case QUICKSORT:
-		{
 			MyAlgorithms::QuickSort(array, 0, (int)array.size() - 1);
 			break;
-		}
 		case HEAPSORT:
-		{
 			MyAlgorithms::HeapSort(array, (int)array.size() - 1);
 			break;
-		}
 		case MERGESORT:
-		{
-			temp_array = vector<int>(array.size()); //Second Part of the Array
 			MyAlgorithms::MergeSort(array, temp_array, 0, (int)array.size() - 1);
 			break;
-		}
 		case SHELLSORT:
 			MyAlgorithms::ShellSort(array, (int)array.size());
 			break;
