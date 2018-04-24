@@ -48,7 +48,6 @@ namespace MyAlgorithms
 	//************
 	void merge(vector<int> &a, vector<int> &b, int low, int mid, int high)
 	{
-		//TODO: merge()
 		int i, j, k;
 
 		//temparray füllen
@@ -72,7 +71,6 @@ namespace MyAlgorithms
 
 	void MergeSort(vector<int> &a, vector<int> &b, int low, int high)
 	{
-		//TODO: MergeSort
 		//Teile Array in möglichst gleiche hälften
 		//Repeat till array sizes sind == 1
 		//Vergleiche vordere elemente der arrays und merge die kleinsten zuerst in ein neues array
@@ -185,6 +183,33 @@ namespace MyAlgorithms
 		}
 	}
 
+	//*********************************
+	//Matrix Multiplication Row Major *
+	//*********************************
+
+	void MatrixMul_RowMajor(vector<double> &A,
+		vector<double> &B,
+		vector<double> &C,
+		int n,
+		int numThreads)
+	{
+		//lda, ldb, ldc are leading dimensions of matrices A,B and C
+		int lda = n;
+		int ldb = n;
+		int ldc = n;
+		double s = 0.0;
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				s = 0.0;
+				for (int k = 0; k < n; k++) {
+					s = s + A[i * lda + k] * B[k * ldb + j];
+				}
+				C[i * ldc + j] = s;
+			}
+		}
+	}
+
 	//************************************
 	//Matrix Multiplication Column Major *
 	//************************************
@@ -210,20 +235,6 @@ namespace MyAlgorithms
 				C[i + j*ldc] = s;
 			}
 		}
-	}
-
-	//*********************************
-	//Matrix Multiplication Row Major *
-	//*********************************
-
-	void MatrixMul_RowMajor(vector<double> &A,
-		vector<double> &B,
-		vector<double> &C,
-		int n,
-		int numThreads)
-	{
-		//TODO: MatrixMult
-
 	}
 
 	//********************

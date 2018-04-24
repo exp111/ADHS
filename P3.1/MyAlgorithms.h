@@ -28,6 +28,16 @@ namespace MyAlgorithms {
   //************
   void ShellSort(vector<int> &a, int n);
 
+
+  //*********************************
+  //Matrix Multiplikation Row Major *
+  //*********************************
+
+  void MatrixMul_RowMajor(vector<double> &A,
+	  vector<double> &B,
+	  vector<double> &C,
+	  int n,
+	  int numThreads);
  
   //************************************
   //Matrix Multiplikation Column Major *
@@ -37,16 +47,6 @@ namespace MyAlgorithms {
 			  vector<double> &B, 
 			  vector<double> &C, 
 			  int n, 
-			  int numThreads);
-
-  //*********************************
-  //Matrix Multiplikation Row Major *
-  //*********************************
-
-  void MatrixMul_RowMajor(vector<double> &A, 
-			  vector<double> &B, 
-			  vector<double> &C, 
-			  int n,
 			  int numThreads);
 
   //********************
