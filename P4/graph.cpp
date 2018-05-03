@@ -133,6 +133,7 @@ bool Graph::print()
 bool Graph::depthSearchRek(int startKey)
 {
 	//TODO: depthSearchRek
+	GraphNode* start = GetNodeByKey(startKey);
     return true;
 }
 

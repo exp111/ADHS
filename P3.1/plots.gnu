@@ -1,6 +1,6 @@
 reset
 set term pdf
-#set autoscale x
+set autoscale x
 set autoscale y
 set xlabel "n [-]"
 set ylabel "t [s]"
