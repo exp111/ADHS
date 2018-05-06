@@ -21,7 +21,7 @@ pause -1
 set out 'matrix_multiplication_results.pdf'
 set xrange [1:1800]
 plot \
-"matrixmul_colmajor_singlethread.txt" with linespoints title 'matrixmul\_colmajor\_singlethread',\
-"matrixmul_rowmajor_singlethread.txt" with linespoints title 'matrixmul\_rowmajor\_singlethread',\
-"matrixmul_colmajor_maxthreads.txt" with linespoints title 'matrixmul\_colmajor\_maxthreads',\
-"matrixmul_rowmajor_maxthreads.txt" with linespoints title 'matrixmul\_rowmajor\_maxthreads',\
+"matrixmulcol_single.txt" with linespoints title 'matrixmul\_colmajor\_singlethread',\
+"matrixmulrow_single.txt" with linespoints title 'matrixmul\_rowmajor\_singlethread',\
+"matrixmulcol_max.txt" with linespoints title 'matrixmul\_colmajor\_maxthreads',\
+"matrixmulrow_max.txt" with linespoints title 'matrixmul\_rowmajor\_maxthreads',\
