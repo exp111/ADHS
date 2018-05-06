@@ -87,22 +87,6 @@ bool Tree::removeRecursive(TreeNode* anker, int posID)
 {
 	if (anker == nullptr)
 		return false;
-
-	/*if (posID > anker->NodePosID)
-	{
-		return removeRecursive(anker->rechts, posID);
-	}
-	else if (anker->NodePosID == posID)
-	{
-		//delete 
-		//TODO: should we delete the childs?
-		deleteWithChilds(anker);
-		return true;
-	}
-	else //if (posID < anker->NodePosID)
-	{
-		return removeRecursive(anker->rechts, posID);
-	}*/
 	
 	if (posID > anker->NodePosID)
 	{
@@ -121,7 +105,6 @@ bool Tree::removeRecursive(TreeNode* anker, int posID)
 	}
 	else if (posID == anker->NodePosID) //This should only happen if we want to delete the anker
 	{
-		//TODO: FIXME removeRecursive()
 		//return false;
 		vector<TreeNode*> childs = getChilds(anker);
 		//TreeNode* newAnker = anker->rechts != nullptr ? anker->rechts : anker->links != nullptr ? anker->links : nullptr;
@@ -162,7 +145,6 @@ bool Tree::remove(int posID)
 	//3.) delete anker->rechts || anker->links
 	//4.) anker->rechts = nullptr || anker->links = nullptr
 	//5.) go through vector and tree->add(childs[i]) them
-	//TODO: crashes cause we don't change the pointer to the deleted
 	if (removeRecursive(anker, posID))
 	{
 		//size--;
