@@ -132,9 +132,16 @@ bool Graph::print()
 //Implement this:
 bool Graph::depthSearchRek(int startKey)
 {
-	//TODO: depthSearchRek
 	GraphNode* start = GetNodeByKey(startKey);
-    return true;
+	if (start == nullptr)
+		return false;
+
+	start->_visited = true;
+	for (int i = 0; i < start->_edges.size(); i++)
+		if (!start->_edges[i].node->_visited)
+			depthSearchRek(start->_edges[i].node->_key);
+
+	return true;
 }
 
 bool breadthSearchIter(int startKey)

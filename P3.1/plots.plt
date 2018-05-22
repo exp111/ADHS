@@ -5,8 +5,6 @@ set autoscale y
 set xlabel "n [-]"
 set ylabel "t [s]"
 set key top left
-set key font ",12"
-set xtics font ",10"
 
 set out 'sorting_algorithm_results.pdf'
 set xrange [1000:1000000]

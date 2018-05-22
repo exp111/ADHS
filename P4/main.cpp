@@ -6,7 +6,7 @@
 
 void displayMenu()
 {
-    std::cout << "Working on Grphs. Please choose:"
+    std::cout << "Working on Graphs. Please choose:" << std::endl
               << "1) Graph einlesen" << std::endl
               << "2) Tiefensuche" << std::endl
               << "3) Breitensuche "<< std::endl
@@ -56,26 +56,22 @@ int main() {
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			//TODO: Menu DepthSearch
-            //This way:
-            //myGraph.depthSearchIter(key);
-
-            //Or this:
-            //myGraph.depthSearchRek(key);
+			myGraph->setAllUnvisited();
+			myGraph->depthSearchRek(key);
+			std::cout << "All Visited: " << myGraph->checkVisited() << std::endl;
         }
 
         //Breadthsearch
-        if(menuwahl==3){
+        if(menuwahl==3)
+		{
 
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
 			//TODO: Menu BreadthSearch
-            //This way:
-            //myGraph.breadthSearchIter(key);
-
-            //Or this:
-            //myGraph.breadthSearchRek(key);
+			myGraph->setAllUnvisited();
+            myGraph->breadthSearchIter(key);
+			std::cout << "All Visited: " << myGraph->checkVisited() << std::endl;
         }
 
         //Prim
