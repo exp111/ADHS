@@ -23,10 +23,10 @@ public:
             value = val;
         }
 
-        bool operator<(const edge& comp) const
-            {
-                return value < comp.value;
-            }
+        bool operator()(const edge& comp, const edge& toComp) const
+           {
+               return comp.value > toComp.value;
+           }
     };
 
     //Maybe helpful for your Work

@@ -13,29 +13,30 @@ void displayMenu()
               << "4) Prim" << std:: endl
               << "5) Kruskal" << std::endl
               << "6) Print Graph as nodelist" << std::endl
-              << "0 for quit" << std::endl
+              << "0) for quit" << std::endl
               << "?> ";
 }
 
 
-int main() {
-
-
+int main() 
+{
     //Insert a switch-case to call your algorithms
     //Maybe you can copy from older Projects
     Graph* myGraph = new Graph();
-    int menuwahl=-1;
+    int menuwahl =- 1;
     int key=-1;
 
-    while(menuwahl != 0){
+    while (menuwahl != 0)
+	{
 
-        do{
+        do
+		{
             displayMenu();
             std::cin >> menuwahl;
-        }while(menuwahl>6 || menuwahl <0);
+        } while(menuwahl > 6 || menuwahl < 0);
 
         //Read Graph
-        if(menuwahl==1)
+        if (menuwahl == 1)
         {
             std::string path;
             std::cout << "Insert path of Graphfile: " << std::endl;
@@ -43,14 +44,14 @@ int main() {
 
             bool done = myGraph->init(path);
 
-            if(done)
+            if (done)
                 std::cout << "Initialize graph successful" << std::endl;
             else
                 std::cout << "Cannot read file" << std::endl;
         }
 
         //Depthsearch
-        if(menuwahl==2)
+        if (menuwahl == 2)
         {
 
             std::cout << "Choose a startkey: " << std::endl;
@@ -62,35 +63,38 @@ int main() {
         }
 
         //Breadthsearch
-        if(menuwahl==3)
+        if (menuwahl == 3)
 		{
 
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			//TODO: Menu BreadthSearch
 			myGraph->setAllUnvisited();
             myGraph->breadthSearchIter(key);
 			std::cout << "All Visited: " << myGraph->checkVisited() << std::endl;
         }
 
         //Prim
-        if(menuwahl==4){
+        if (menuwahl == 4)
+		{
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
 			//TODO: Menu Prim
-            //myGraph.prim(key);
+			myGraph->setAllUnvisited();
+			std::cout << "Value: " << myGraph->prim(key) << std::endl;
         }
 
         //Kruskal
-        if(menuwahl==5){
+        if (menuwahl==5)
+		{
 			//TODO: Menu kruskal
             //myGraph.kruskal();
         }
 
         //Print function
-        if(menuwahl==6){
+        if (menuwahl==6)
+		{
             bool done = myGraph->print();
 
             if(done)

@@ -144,20 +144,70 @@ bool Graph::depthSearchRek(int startKey)
 	return true;
 }
 
-bool breadthSearchIter(int startKey)
+
+bool Graph::breadthSearchIter(int startKey)
 {
-	//TODO: breadthSearchIter
+	GraphNode* start = GetNodeByKey(startKey);
+	if (start == nullptr)
+		return false;
+
+	std::queue<GraphNode*> q;
+	q.push(start);
+
+	start->_visited = true;
+	while (!q.empty())
+	{
+		for (GraphNode::edge edge : q.front()->_edges)
+		{
+			if (!edge.node->_visited)
+			{
+				edge.node->_visited = true;
+				q.push(edge.node);
+			}
+		}
+		q.pop();
+	}
+
     return true;
 }
 
 //This must be done by you
-double prim(int startKey)
+double Graph::prim(int startKey)
 {
 	//TODO: prim
-    return 5.;
+	GraphNode* start = GetNodeByKey(startKey);
+	if (start == nullptr)
+		return -1;
+
+	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
+	double mst = 0;
+	
+	for (GraphNode::edge edgy : start->_edges)
+	{
+		q.push(edgy);
+	}
+	start->_visited = true;
+
+	while (!q.empty())
+	{
+		GraphNode::edge topEdgy = q.top();
+		mst += topEdgy.value;
+		topEdgy.node->_visited = true;
+		q.pop();
+
+		for (GraphNode::edge newEdgy : topEdgy.node->_edges)
+		{
+			if (!newEdgy.node->_visited)
+			{
+				q.push(newEdgy);
+			}
+		}
+	}
+
+    return mst;
 }
 
-double kruskal()
+double Graph::kruskal()
 {
 	//TODO: kruskal
     return 5.;
