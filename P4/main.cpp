@@ -80,7 +80,6 @@ int main()
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			//TODO: Menu Prim
 			myGraph->setAllUnvisited();
 			std::cout << "Value: " << myGraph->prim(key) << std::endl;
         }
@@ -88,8 +87,8 @@ int main()
         //Kruskal
         if (menuwahl==5)
 		{
-			//TODO: Menu kruskal
-            //myGraph.kruskal();
+			myGraph->setAllUnvisited();
+            myGraph->kruskal();
         }
 
         //Print function

@@ -127,6 +127,22 @@ bool Graph::print()
     return true;
 }
 
+void Graph::getAllEdges(int startKey, std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge>& q)
+{
+	GraphNode* start = GetNodeByKey(startKey);
+	if (start == nullptr)
+		return;
+
+	for (GraphNode::edge edgy : start->_edges)
+	{
+		q.push(edgy);
+		if (!edgy.node->_visited)
+		{
+			getAllEdges(edgy.node->_key, q);
+		}
+	}
+}
+
 //Implement the depth-/breadfirstthsearch and Prim & Kruskal here
 
 //Implement this:
@@ -137,9 +153,9 @@ bool Graph::depthSearchRek(int startKey)
 		return false;
 
 	start->_visited = true;
-	for (int i = 0; i < start->_edges.size(); i++)
-		if (!start->_edges[i].node->_visited)
-			depthSearchRek(start->_edges[i].node->_key);
+	for (GraphNode::edge edgy : start->_edges)
+		if (!edgy.node->_visited)
+			depthSearchRek(edgy.node->_key);
 
 	return true;
 }
@@ -174,7 +190,6 @@ bool Graph::breadthSearchIter(int startKey)
 //This must be done by you
 double Graph::prim(int startKey)
 {
-	//TODO: prim
 	GraphNode* start = GetNodeByKey(startKey);
 	if (start == nullptr)
 		return -1;
@@ -219,5 +234,13 @@ double Graph::prim(int startKey)
 double Graph::kruskal()
 {
 	//TODO: kruskal
-    return 5.;
+	
+	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
+	double mst = 0;
+
+	//Add all edges to the priority queue
+	getAllEdges(0, q); //Currently adds edges multiple times (dunno if that's correct or if we even get all edges)
+	setAllUnvisited();
+
+    return mst;
 }

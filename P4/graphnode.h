@@ -15,7 +15,6 @@ public:
         edge(){
             node = nullptr;
             value = 0;
-
         }
         edge(GraphNode * n, double val)
         {
