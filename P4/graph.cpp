@@ -179,6 +179,7 @@ double Graph::prim(int startKey)
 	if (start == nullptr)
 		return -1;
 
+	//priority queues so we just can get the top edge in the queue (the one with the lowest value)
 	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
 	double mst = 0;
 	
@@ -190,11 +191,19 @@ double Graph::prim(int startKey)
 
 	while (!q.empty())
 	{
-		GraphNode::edge topEdgy = q.top();
-		mst += topEdgy.value;
-		topEdgy.node->_visited = true;
-		q.pop();
+		GraphNode::edge topEdgy;
+		do
+		{
+			if (q.empty()) //no nodes? then frick off
+				return mst;
+			topEdgy = q.top();
+			q.pop();
+		} while (topEdgy.node->_visited); //do it till we find a not visited node
 
+		mst += topEdgy.value;
+		topEdgy.node->_visited = true; //Set to visited to we don't double add a edge
+		
+		//New possible routes -> add them if they're not visited already
 		for (GraphNode::edge newEdgy : topEdgy.node->_edges)
 		{
 			if (!newEdgy.node->_visited)
