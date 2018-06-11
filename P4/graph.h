@@ -32,6 +32,8 @@ public:
     double prim(int startKey);
     double kruskal();
 
+	bool hasKreis(GraphNode* src, GraphNode* dst);
+
     //They might be helpful
     int _anzKnoten;
     bool _ger, _gew;

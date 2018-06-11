@@ -91,10 +91,10 @@ bool Graph::init(std::string path)
             GraphNode* currentNode = GetNodeByKey(from);
             GraphNode* currentNeighbour = GetNodeByKey(to);
             //Hinrichrung:
-            GraphNode::edge edge(currentNeighbour, value);
+            GraphNode::edge edge(currentNeighbour, currentNode, value);
             currentNode->_edges.push_back(edge);
             //Rückrichtung:
-            GraphNode::edge backEdge(currentNode, value);
+            GraphNode::edge backEdge(currentNode, currentNeighbour, value);
             currentNeighbour->_edges.push_back(backEdge);
         }
        return true;
@@ -117,7 +117,7 @@ bool Graph::print()
         {
             if(!currentNode->_edges.empty()){
                 GraphNode::edge currentEdge = currentNode->_edges[k];
-                std::cout << " -> " << currentEdge.node->_key << " [" << currentEdge.value << "] ";
+                std::cout << " -> " << currentEdge.dstNode->_key << " [" << currentEdge.value << "] ";
             }
         }
         std::cout << std::endl;
@@ -133,12 +133,13 @@ void Graph::getAllEdges(int startKey, std::priority_queue<GraphNode::edge, std::
 	if (start == nullptr)
 		return;
 
+	start->_visited = true;
 	for (GraphNode::edge edgy : start->_edges)
 	{
 		q.push(edgy);
-		if (!edgy.node->_visited)
+		if (!edgy.dstNode->_visited)
 		{
-			getAllEdges(edgy.node->_key, q);
+			getAllEdges(edgy.dstNode->_key, q);
 		}
 	}
 }
@@ -154,8 +155,8 @@ bool Graph::depthSearchRek(int startKey)
 
 	start->_visited = true;
 	for (GraphNode::edge edgy : start->_edges)
-		if (!edgy.node->_visited)
-			depthSearchRek(edgy.node->_key);
+		if (!edgy.dstNode->_visited)
+			depthSearchRek(edgy.dstNode->_key);
 
 	return true;
 }
@@ -175,10 +176,10 @@ bool Graph::breadthSearchIter(int startKey)
 	{
 		for (GraphNode::edge edge : q.front()->_edges)
 		{
-			if (!edge.node->_visited)
+			if (!edge.dstNode->_visited)
 			{
-				edge.node->_visited = true;
-				q.push(edge.node);
+				edge.dstNode->_visited = true;
+				q.push(edge.dstNode);
 			}
 		}
 		q.pop();
@@ -213,15 +214,15 @@ double Graph::prim(int startKey)
 				return mst;
 			topEdgy = q.top();
 			q.pop();
-		} while (topEdgy.node->_visited); //do it till we find a not visited node
+		} while (topEdgy.dstNode->_visited); //do it till we find a not visited node
 
 		mst += topEdgy.value;
-		topEdgy.node->_visited = true; //Set to visited to we don't double add a edge
+		topEdgy.dstNode->_visited = true; //Set to visited to we don't double add a edge
 		
 		//New possible routes -> add them if they're not visited already
-		for (GraphNode::edge newEdgy : topEdgy.node->_edges)
+		for (GraphNode::edge newEdgy : topEdgy.dstNode->_edges)
 		{
-			if (!newEdgy.node->_visited)
+			if (!newEdgy.dstNode->_visited)
 			{
 				q.push(newEdgy);
 			}
@@ -234,7 +235,6 @@ double Graph::prim(int startKey)
 double Graph::kruskal()
 {
 	//TODO: kruskal
-	
 	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
 	double mst = 0;
 
@@ -242,5 +242,46 @@ double Graph::kruskal()
 	getAllEdges(0, q); //Currently adds edges multiple times (dunno if that's correct or if we even get all edges)
 	setAllUnvisited();
 
+	while (!q.empty())
+	{
+		GraphNode::edge topEdgy = q.top();
+		q.pop();
+		//wenn kein Kreis -> füge zu mst hinzu
+		//if (!hasKreis(topEdgy))
+		if (!hasKreis(topEdgy.srcNode, topEdgy.dstNode))
+		{
+			mst += topEdgy.value;
+			for (int i = 0; i < topEdgy.srcNode->_edges.size(); i++)
+			{
+				if (topEdgy.srcNode->_edges[i].dstNode == topEdgy.dstNode)
+				{
+					topEdgy.srcNode->_edges[i].visited = true;
+					break;
+				}
+			}
+		}
+		setAllUnvisited();
+	}
+
     return mst;
+}
+
+bool Graph::hasKreis(GraphNode* src, GraphNode* dst)
+{
+	//gucke ob zwischen src und dst eine verbindung besteht
+	//dazu gucken ob edges visited
+	src->_visited = true;
+	for each(GraphNode::edge edgy in src->_edges)
+	{
+		if (edgy.visited && !edgy.dstNode->_visited)
+		{
+			if (edgy.dstNode == dst)
+				return true;
+			else
+				if (hasKreis(edgy.dstNode, dst))
+					return true;
+		}
+	}
+
+	return false;
 }

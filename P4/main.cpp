@@ -88,7 +88,7 @@ int main()
         if (menuwahl==5)
 		{
 			myGraph->setAllUnvisited();
-            myGraph->kruskal();
+			std::cout << "Value: " << myGraph->kruskal() << std::endl;
         }
 
         //Print function

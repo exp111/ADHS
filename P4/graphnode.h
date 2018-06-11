@@ -9,17 +9,23 @@ class GraphNode
 public:
 
     struct edge {
-        GraphNode *node; //Destination node
+        GraphNode *dstNode; //Destination node
+		GraphNode *srcNode;
         double value; //Edge Weight
+		bool visited;
 
         edge(){
-            node = nullptr;
+            dstNode = nullptr;
+			srcNode = nullptr;
             value = 0;
+			visited = false;
         }
-        edge(GraphNode * n, double val)
+        edge(GraphNode * dst, GraphNode *src, double val)
         {
-            node = n;
+            dstNode = dst;
+			srcNode = src;
             value = val;
+			visited = false;
         }
 
         bool operator()(const edge& comp, const edge& toComp) const
