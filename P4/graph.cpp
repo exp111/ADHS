@@ -232,22 +232,51 @@ double Graph::prim(int startKey)
     return mst;
 }
 
+bool contains(std::vector<GraphNode::edge> visited, GraphNode::edge edgy)
+{
+	for each(GraphNode::edge vEdgy in visited)
+	{
+		if (vEdgy.dstNode == edgy.dstNode && vEdgy.srcNode == edgy.srcNode && vEdgy.value == edgy.value)
+			return true;
+	}
+	return false;
+}
+
 double Graph::kruskal()
 {
 	//TODO: kruskal
 	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
+	std::vector<GraphNode::edge> visited;
 	double mst = 0;
 
 	//Add all edges to the priority queue
-	getAllEdges(0, q); //Currently adds edges multiple times (dunno if that's correct or if we even get all edges)
+	getAllEdges(0, q);
 	setAllUnvisited();
 
 	while (!q.empty())
 	{
-		GraphNode::edge topEdgy = q.top();
-		q.pop();
+		GraphNode::edge topEdgy;
+		bool isDuplicate = false;
+		do
+		{
+			if (q.empty())
+				return mst;
+			isDuplicate = false;
+			topEdgy = q.top();
+			visited.push_back(topEdgy);
+			q.pop();
+			for each (GraphNode::edge edgy in topEdgy.dstNode->_edges) //check for duplicate
+			{
+				if (edgy.dstNode == topEdgy.srcNode)
+				{
+					isDuplicate = contains(visited, edgy);
+					break;
+				}
+			}
+		} while ( topEdgy.visited || isDuplicate);
+
+		std::cout << "From " << topEdgy.srcNode->_key << " to " << topEdgy.dstNode->_key << ". Distance: " << topEdgy.value;
 		//wenn kein Kreis -> füge zu mst hinzu
-		//if (!hasKreis(topEdgy))
 		if (!hasKreis(topEdgy.srcNode, topEdgy.dstNode))
 		{
 			mst += topEdgy.value;
@@ -259,6 +288,20 @@ double Graph::kruskal()
 					break;
 				}
 			}
+
+			for (int i = 0; i < topEdgy.dstNode->_edges.size(); i++)
+			{
+				if (topEdgy.dstNode->_edges[i].dstNode == topEdgy.srcNode)
+				{
+					topEdgy.dstNode->_edges[i].visited = true;
+					break;
+				}
+			}
+			std::cout << ". Added." << std::endl;
+		}
+		else
+		{
+			std::cout << ". Not added." << std::endl;
 		}
 		setAllUnvisited();
 	}
