@@ -57,7 +57,7 @@ int main()
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			myGraph->setAllUnvisited();
+			myGraph->setAllUnvisited(true);
 			myGraph->depthSearchRek(key);
 			std::cout << "All Visited: " << myGraph->checkVisited() << std::endl;
         }
@@ -69,7 +69,7 @@ int main()
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			myGraph->setAllUnvisited();
+			myGraph->setAllUnvisited(true);
             myGraph->breadthSearchIter(key);
 			std::cout << "All Visited: " << myGraph->checkVisited() << std::endl;
         }
@@ -80,14 +80,14 @@ int main()
             std::cout << "Choose a startkey: " << std::endl;
             std::cin >> key;
 
-			myGraph->setAllUnvisited();
+			myGraph->setAllUnvisited(true);
 			std::cout << "Value: " << myGraph->prim(key) << std::endl;
         }
 
         //Kruskal
         if (menuwahl==5)
 		{
-			myGraph->setAllUnvisited();
+			myGraph->setAllUnvisited(true);
 			std::cout << "Value: " << myGraph->kruskal() << std::endl;
         }
 

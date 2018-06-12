@@ -29,12 +29,19 @@ GraphNode* Graph::GetNodeByKey(int key)
 }
 
 //iterate all nodes and set _visited to false
-void Graph::setAllUnvisited()
+void Graph::setAllUnvisited(bool edges)
 {
     for(int i = 0; i < _nodes.size(); i++)
     {
         GraphNode* currentNode = _nodes[i];
         currentNode->_visited = false;
+		if (edges)
+		{
+			for (int i = 0; i < currentNode->_edges.size(); i++)
+			{
+				currentNode->_edges[i].visited = false;
+			}
+		}
     }
 }
 
@@ -127,19 +134,13 @@ bool Graph::print()
     return true;
 }
 
-void Graph::getAllEdges(int startKey, std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge>& q)
+void Graph::getAllEdges(std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge>& q)
 {
-	GraphNode* start = GetNodeByKey(startKey);
-	if (start == nullptr)
-		return;
-
-	start->_visited = true;
-	for (GraphNode::edge edgy : start->_edges)
+	for each (GraphNode* nodey in _nodes)
 	{
-		q.push(edgy);
-		if (!edgy.dstNode->_visited)
+		for each(GraphNode::edge edgy in nodey->_edges)
 		{
-			getAllEdges(edgy.dstNode->_key, q);
+			q.push(edgy);
 		}
 	}
 }
@@ -244,13 +245,12 @@ bool contains(std::vector<GraphNode::edge> visited, GraphNode::edge edgy)
 
 double Graph::kruskal()
 {
-	//TODO: kruskal
+	//kruskal
 	std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> q;
-	std::vector<GraphNode::edge> visited;
 	double mst = 0;
 
 	//Add all edges to the priority queue
-	getAllEdges(0, q);
+	getAllEdges(q);
 	setAllUnvisited();
 
 	while (!q.empty())
@@ -263,17 +263,8 @@ double Graph::kruskal()
 				return mst;
 			isDuplicate = false;
 			topEdgy = q.top();
-			visited.push_back(topEdgy);
 			q.pop();
-			for each (GraphNode::edge edgy in topEdgy.dstNode->_edges) //check for duplicate
-			{
-				if (edgy.dstNode == topEdgy.srcNode)
-				{
-					isDuplicate = contains(visited, edgy);
-					break;
-				}
-			}
-		} while ( topEdgy.visited || isDuplicate);
+		} while (topEdgy.visited || isDuplicate);
 
 		std::cout << "From " << topEdgy.srcNode->_key << " to " << topEdgy.dstNode->_key << ". Distance: " << topEdgy.value;
 		//wenn kein Kreis -> füge zu mst hinzu

@@ -17,12 +17,12 @@ public:
     ~Graph();
 
     GraphNode* GetNodeByKey(int key);
-    void setAllUnvisited();
+    void setAllUnvisited(bool edges = false);
     bool checkVisited();
     bool init(std::string path);
     bool print();
 
-	void getAllEdges(int startKey, std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> &q);
+	void getAllEdges(std::priority_queue<GraphNode::edge, std::vector<GraphNode::edge>, GraphNode::edge> &q);
 
     //Implement this:
     bool depthSearchRek(int startKey);
