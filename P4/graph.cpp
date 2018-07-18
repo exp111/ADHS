@@ -256,15 +256,13 @@ double Graph::kruskal()
 	while (!q.empty())
 	{
 		GraphNode::edge topEdgy;
-		bool isDuplicate = false;
 		do
 		{
 			if (q.empty())
 				return mst;
-			isDuplicate = false;
 			topEdgy = q.top();
 			q.pop();
-		} while (topEdgy.visited || isDuplicate);
+		} while (topEdgy.visited);
 
 		std::cout << "From " << topEdgy.srcNode->_key << " to " << topEdgy.dstNode->_key << ". Distance: " << topEdgy.value;
 		//wenn kein Kreis -> füge zu mst hinzu
